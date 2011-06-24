@@ -19,3 +19,7 @@ typedef  unsigned __int64 uint64_t;
 
 typedef  float            float_t;
 typedef  double           double_t;
+
+#ifndef NULL 
+    #define NULL 0
+#endif

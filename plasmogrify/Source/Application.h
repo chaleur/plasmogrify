@@ -12,30 +12,42 @@
 
 namespace Plasmogrify
 {
-	namespace System
-	{
-		namespace Graphics
-		{
-			class Device;
-		}
-	}
-	class Application
-	{
-		public:
-			Application();
-			~Application();
+    namespace World
+    {
+        class WorldData;
+    }
 
-			void Init(HINSTANCE hInstance, int nCmdShow);
-			uint16_t MainLoop();
+    namespace System
+    {
+        namespace Graphics
+        {
+            class Device;
+        }
+    }
 
-	    private:
-			void InitWindow(HINSTANCE hInstance, int nCmdShow);
-			void InitDevice();
+    namespace Application
+    {
+        class Application
+        {
+            public:
+                Application();
+                ~Application();
 
-		private:
+                void Init(HINSTANCE hInstance, int nCmdShow);
+                uint16_t MainLoop();
 
-			bool					      mbInit;
-			HWND						  mHWND;
-			System::Graphics::Device*     mpDevice;
-	};
-}
+            private:
+                void InitWindow(HINSTANCE hInstance, int nCmdShow);
+                void InitDevice();
+
+            private:
+
+                bool                          mbInit;
+                HWND                          mHWND;
+
+                System::Graphics::Device*     mpDevice;
+                World::WorldData*              mpWorldData;
+        };
+
+    } // namespace Application
+} // namespace Plasmogrify

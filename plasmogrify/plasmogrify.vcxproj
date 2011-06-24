@@ -14,10 +14,17 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp" />
+    <ClCompile Include="Source\World\Gears\Gear.cpp" />
+    <ClCompile Include="Source\World\Gears\GearBox.cpp" />
+    <ClCompile Include="Source\World\WorldData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Config.h" />
     <ClInclude Include="Source\System\Graphics\Device.h" />
+    <ClInclude Include="Source\World\Gears\Gear.h" />
+    <ClInclude Include="Source\World\Gears\GearBox.h" />
+    <ClInclude Include="Source\World\WorldData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\generic.fx" />

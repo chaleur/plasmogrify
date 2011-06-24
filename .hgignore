@@ -4,6 +4,7 @@ syntax: glob
 *.[Oo]bj
 *.manifest
 *.lastbuildstate
+*.ipch
 *.idb
 *.pdb
 *.user

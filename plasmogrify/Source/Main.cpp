@@ -9,12 +9,13 @@
 
 #include <windows.h>
 #include "Application.h"
+#pragma once
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Plasmogrify::Application* pPlasmogrify = new Plasmogrify::Application();
-	pPlasmogrify->Init(hInstance, nCmdShow);
-	return pPlasmogrify->MainLoop();
+    Plasmogrify::Application::Application* pPlasmogrify = new Plasmogrify::Application::Application();
+    pPlasmogrify->Init(hInstance, nCmdShow);
+    return pPlasmogrify->MainLoop();
 }
 
 

@@ -9,33 +9,53 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Application\Headers">
-      <UniqueIdentifier>{23caa0fd-13e3-461e-aa7d-54cb8286f722}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Headers">
-      <UniqueIdentifier>{48effe76-5d4c-4ee1-b7eb-2e6b5fa9a9df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{3c2afaeb-7225-4df6-96a7-f00d5dd54ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{c1992d09-e453-4ad1-9e44-534e6879a4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Gears">
+      <UniqueIdentifier>{a86d35da-34ae-4707-8218-bf21cc84f167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Graphics">
+      <UniqueIdentifier>{bb038359-2d7b-4f6b-a6b4-019b2437e1d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Application</Filter>
+    <ClCompile Include="Source\World\WorldData.cpp">
+      <Filter>World</Filter>
     </ClCompile>
+    <ClCompile Include="Source\World\Gears\Gear.cpp">
+      <Filter>World\Gears</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World\Gears\GearBox.cpp">
+      <Filter>World\Gears</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp">
-      <Filter>System</Filter>
+      <Filter>System\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
-      <Filter>Application\Headers</Filter>
+      <Filter>Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\World\WorldData.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\World\Gears\Gear.h">
+      <Filter>World\Gears</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\World\Gears\GearBox.h">
+      <Filter>World\Gears</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Config.h" />
     <ClInclude Include="Source\System\Graphics\Device.h">
-      <Filter>System\Headers</Filter>
+      <Filter>System\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
