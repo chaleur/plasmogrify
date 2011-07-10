@@ -43,7 +43,15 @@ namespace Plasmogrify
 
         Application::~Application()
         {
+            if (mpDevice)
+            {
+                delete mpDevice;
+            }
 
+            if (mpWorldData)
+            {
+                delete mpWorldData;
+            }
         }
 
         void Application::InitWindow(HINSTANCE hInstance, int nCmdShow)
@@ -115,6 +123,8 @@ namespace Plasmogrify
                 }
                 else
                 {
+                    mpWorldData->Update();
+
                     mpDevice->Render();
                 }
             }

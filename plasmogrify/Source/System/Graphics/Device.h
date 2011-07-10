@@ -1,9 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// \\\ file        Application.h
+// \\\ file        Device.h
 // \\\ author      Kaye Mason
 // \\\ copyright   2011
-// \\\ brief       Plasma Application
+// \\\ brief       Plasma Device Implementation
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -13,6 +13,8 @@
 #include <d3dx11.h>
 #include <xnamath.h>
 
+#include "Geometry.h"
+
 namespace Plasmogrify
 {
     namespace System
@@ -21,13 +23,6 @@ namespace Plasmogrify
         {
             class Device
             {
-                struct Vertex
-                {
-                    XMFLOAT3 Pos;
-                    XMFLOAT4 Colour;
-                };
-                
-
                 public:
                     Device();
                     ~Device();
@@ -55,6 +50,10 @@ namespace Plasmogrify
                     ID3D11PixelShader*      mpPixelShader;
                     ID3D11InputLayout*      mpVertexLayout;
                     ID3D11Buffer*           mpVertexBuffer;
+
+                    VertexList              mVertexList;
+
+                    
             };
 
         } // namespace Graphics

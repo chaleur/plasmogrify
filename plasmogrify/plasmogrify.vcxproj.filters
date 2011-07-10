@@ -39,6 +39,9 @@
     <ClCompile Include="Source\System\Graphics\Device.cpp">
       <Filter>System\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Geometry.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Source\Config.h" />
     <ClInclude Include="Source\System\Graphics\Device.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Geometry.h">
       <Filter>System\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

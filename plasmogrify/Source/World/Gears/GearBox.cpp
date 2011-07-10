@@ -25,6 +25,10 @@ namespace Plasmogrify
 
             GearBox::~GearBox()
             {
+                if (mpGear)
+                {
+                    delete mpGear;
+                }
             }
 
             void GearBox::Init()

@@ -23,6 +23,7 @@ namespace Plasmogrify
                 ~WorldData();
 
                 void Init(void);
+                void Update(void);
 
             private:
                 bool                   mbInit;

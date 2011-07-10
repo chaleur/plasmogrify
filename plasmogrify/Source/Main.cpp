@@ -13,9 +13,9 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    Plasmogrify::Application::Application* pPlasmogrify = new Plasmogrify::Application::Application();
-    pPlasmogrify->Init(hInstance, nCmdShow);
-    return pPlasmogrify->MainLoop();
+    Plasmogrify::Application::Application pPlasmogrify;
+    pPlasmogrify.Init(hInstance, nCmdShow);
+    return pPlasmogrify.MainLoop();
 }
 
 

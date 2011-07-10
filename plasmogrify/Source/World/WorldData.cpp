@@ -34,5 +34,10 @@ namespace Plasmogrify
             mpGearBox->Init();
         }
 
+        void WorldData::Update()
+        {
+            // \\\TODO: Update World Data
+        }
+
     } // namespace World
 } // namespace Plasmogrify

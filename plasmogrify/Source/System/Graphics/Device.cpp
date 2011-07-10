@@ -1,9 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// \\\ file        Application.cpp
+// \\\ file        Device.cpp
 // \\\ author      Kaye Mason
 // \\\ copyright   2011
-// \\\ brief       Plasmogrify Application
+// \\\ brief       Plasmogrify Device Implementation
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,6 +140,8 @@ namespace Plasmogrify
 
             void Device::InitGeometry()
             {
+
+                
                 Vertex verts[] =
                 {
                     {XMFLOAT3(0.0f, 0.5f, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
@@ -155,10 +157,9 @@ namespace Plasmogrify
                 bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
                 mpDevice->CreateBuffer( &bd, NULL, &mpVertexBuffer );
-
                 D3D11_MAPPED_SUBRESOURCE ms;
                 mpContext->Map(mpVertexBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms); 
-                memcpy(ms.pData, verts, sizeof(verts));
+                memcpy(ms.pData, mVertexList.GetVertexList(), mVertexList.GetVertexListSize()); 
                 mpContext->Unmap(mpVertexBuffer, NULL);
 
                 UINT stride = sizeof( Vertex );
