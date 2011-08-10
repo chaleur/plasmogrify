@@ -32,9 +32,16 @@ namespace Plasmogrify
                     Vertex*     GetVertexList();
                     size_t      GetVertexListSize();
 
+                    uint32_t    GetVertexCount();
+
+                    void Update();
+
+                    void BuildGear();
+
                 private:
                     
                     Vertex*     mpVertexList;
+                    uint32_t    mVertexCount;
             };
 
         } // namespace Graphics

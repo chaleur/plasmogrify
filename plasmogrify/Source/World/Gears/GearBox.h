@@ -22,6 +22,7 @@ namespace Plasmogrify
                     ~GearBox();
 
                     void Init();
+                    void Update(float dt);
 
                 private:
                     bool                mbInit;

@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "System/Graphics/Device.h"
 #include "World/WorldData.h"
+#include "Timer.h"
 
 #include <iostream>
 #include <windows.h>
@@ -18,7 +19,28 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 {
     switch(message)
     {
-    case WM_DESTROY:
+        case WM_ACTIVATE:
+        {
+            uint32_t i = 0;
+            uint32_t k = 2;
+            i += k;
+            break;
+        }
+        case WM_SIZE:
+        {
+            uint32_t i = 0;
+            uint32_t k = 2;
+            i += k;
+            break;
+        }
+        case WM_ENTERSIZEMOVE:
+        {
+            uint32_t i = 0;
+            uint32_t k = 2;
+            i += k;
+            break;
+        }
+        case WM_DESTROY:
         {
             PostQuitMessage(0);
             return 0;
@@ -91,7 +113,6 @@ namespace Plasmogrify
         {
             InitWindow(hInstance, nCmdShow);
             InitDevice();
-
             mbInit = true;
         }
 
@@ -109,6 +130,7 @@ namespace Plasmogrify
             }
 
 
+            Timer timer;
             while(true)
             {
                 if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -120,11 +142,37 @@ namespace Plasmogrify
                     {
                         break;
                     }
+
+                    switch (msg.message)
+                    {
+                        case WM_ACTIVATE:
+                        {
+                            uint32_t i = 0;
+                            uint32_t k = 2;
+                            i += k;
+                            break;
+                        }
+                        case WM_SIZE:
+                        {
+                            uint32_t i = 0;
+                            uint32_t k = 2;
+                            i += k;
+                            break;
+                        }
+                        case WM_ENTERSIZEMOVE:
+                        {
+                            uint32_t i = 0;
+                            uint32_t k = 2;
+                            i += k;
+                            break;
+                        }
+                    }
+
                 }
                 else
                 {
-                    mpWorldData->Update();
-
+                    timer.Tick();
+                    mpWorldData->Update(timer.GetDeltaTime());
                     mpDevice->Render();
                 }
             }

@@ -7,6 +7,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "../../System/Graphics/Geometry.h"
+
 namespace Plasmogrify
 {
     namespace World
@@ -18,6 +20,15 @@ namespace Plasmogrify
                 public:
                     Gear();
                     ~Gear();
+
+                public:
+                    void Init();
+                    void Update(float dt);
+                    void Draw();
+
+                private:
+                    bool                              mbInit;
+                    System::Graphics::VertexList*     mpVertexList;
             };
 
         } // namespace Gears

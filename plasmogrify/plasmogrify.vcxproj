@@ -14,7 +14,10 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp" />
+    <ClCompile Include="Source\System\Graphics\Font.cpp" />
     <ClCompile Include="Source\System\Graphics\Geometry.cpp" />
+    <ClCompile Include="Source\System\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\World\Gears\Gear.cpp" />
     <ClCompile Include="Source\World\Gears\GearBox.cpp" />
     <ClCompile Include="Source\World\WorldData.cpp" />
@@ -23,12 +26,16 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Config.h" />
     <ClInclude Include="Source\System\Graphics\Device.h" />
+    <ClInclude Include="Source\System\Graphics\Font.h" />
     <ClInclude Include="Source\System\Graphics\Geometry.h" />
+    <ClInclude Include="Source\System\Graphics\Texture.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\World\Gears\Gear.h" />
     <ClInclude Include="Source\World\Gears\GearBox.h" />
     <ClInclude Include="Source\World\WorldData.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\font.fx" />
     <None Include="Shaders\generic.fx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -69,7 +76,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

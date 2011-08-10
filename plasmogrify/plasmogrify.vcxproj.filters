@@ -42,6 +42,15 @@
     <ClCompile Include="Source\System\Graphics\Geometry.cpp">
       <Filter>System\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Font.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Texture.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -63,9 +72,21 @@
     <ClInclude Include="Source\System\Graphics\Geometry.h">
       <Filter>System\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Font.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Texture.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\generic.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\font.fx">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

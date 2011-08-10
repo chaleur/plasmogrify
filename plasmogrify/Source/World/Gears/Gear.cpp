@@ -16,10 +16,30 @@ namespace Plasmogrify
         namespace Gears
         {
             Gear::Gear()
+                : mbInit(false)
+                , mpVertexList(NULL)
             {
             }
 
             Gear::~Gear()
+            {
+                if (mpVertexList)
+                {
+                    delete mpVertexList;
+                }
+            }
+
+            void Gear::Init()
+            {
+                mbInit = true;
+                mpVertexList = new System::Graphics::VertexList();
+            }
+
+            void Gear::Update(float dt)
+            {
+            }
+
+            void Gear::Draw()
             {
             }
 

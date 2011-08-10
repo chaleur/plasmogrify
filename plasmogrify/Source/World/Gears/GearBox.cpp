@@ -35,6 +35,12 @@ namespace Plasmogrify
             {
                 mbInit = true;
                 mpGear = new Gear();
+                mpGear->Init();
+            }
+
+            void GearBox::Update(float dt)
+            {
+                mpGear->Update(dt);
             }
 
         } // namespace Gears

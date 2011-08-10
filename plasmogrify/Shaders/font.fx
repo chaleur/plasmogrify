@@ -9,6 +9,7 @@ VSOut VS(float4 Col : COLOR, float4 Pos : POSITION)
     VSOut Output;
     Output.Pos = Pos; 
     Output.Col = Col;
+
     return Output;
 }
 

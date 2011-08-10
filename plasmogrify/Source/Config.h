@@ -7,6 +7,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <tchar.h>
+
 typedef  __int8           int8_t;
 typedef  __int16          int16_t;
 typedef  __int32          int32_t;
@@ -19,6 +21,33 @@ typedef  unsigned __int64 uint64_t;
 
 typedef  float            float_t;
 typedef  double           double_t;
+
+#define HR HRTRACE
+
+#define HRTRACE(hr, error)                                                                  \
+        {                                                                                   \
+            if (FAILED(hr))                                                                 \
+            {                                                                               \
+                DXTraceW(__FILE__, (DWORD)__LINE__, hr, error, true);                       \
+            }                                                                               \
+        }
+
+
+#define HROUTPUT(hr, error)                                                                 \
+        {                                                                                   \
+            if( FAILED(hr) )                                                                \
+            {                                                                               \
+                OutputDebugStringA(error);                                                  \
+            }                                                                               \
+        }
+
+#define HRMB(hr, error)                                                                     \
+        {                                                                                   \
+            if( FAILED(hr) )                                                                \
+            {                                                                               \
+                MessageBox(NULL,  error, "Plasmogrify Error", MB_OK);                       \
+            }                                                                               \
+        }
 
 #ifndef NULL 
     #define NULL 0
