@@ -66,10 +66,18 @@ namespace Plasmogrify
                 hr = D3D11CreateDeviceAndSwapChain( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, &mpContext );
                 HRTRACE(hr, L"Failed to Create Device and Swap Chain.");
 
-                IDXGIFactory * pFactory;
-                HRTRACE(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory) ), L"Failed to Create DXGI Factory.");
-                //Create
-                //IDXGIFactory::CreateSwapChain();
+                // TODO: This method fails.  Why?
+
+                //HRESULT result;
+                //result = D3D11CreateDevice( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &mpDevice, NULL, &mpContext);
+                //HRTRACE(result, L"Failed to create D3D11 Device.");
+
+                //IDXGIFactory* pFactory;
+                //result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory));
+                //HRTRACE(result, L"Failed to Create DXGI Factory.");
+                
+                //result = pFactory->CreateSwapChain(mpDevice, &scd, &mpSwapChain);
+                //HRTRACE(result, L"Failed to create swap chain");
 
                 return hr;
 
@@ -136,7 +144,7 @@ namespace Plasmogrify
                 HRTRACE(result, L"Failed to init depth stencil buffer.");
                 hr |= result;
 
-                mpContext->OMSetRenderTargets( 1, &mpRenderTargetView, NULL );
+                mpContext->OMSetRenderTargets( 1, &mpRenderTargetView, mpDepthStencilView );
 
                 return hr;
             }
@@ -309,6 +317,7 @@ namespace Plasmogrify
             {
                 float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; //red,green,blue,alpha
                 mpContext->ClearRenderTargetView( mpRenderTargetView, ClearColor );
+                mpContext->ClearDepthStencilView( mpDepthStencilView, D3D10_CLEAR_DEPTH|D3D10_CLEAR_STENCIL, 1.0f, 0);
 
                 mpContext->VSSetShader( mpVertexShader, NULL, 0 );
                 mpContext->PSSetShader( mpPixelShader, NULL, 0 );
