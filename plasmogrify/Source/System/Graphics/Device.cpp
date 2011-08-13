@@ -8,6 +8,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Device.h"
+#include "Context.h"
+#include <iostream>
+#include <vector>
 #include <d3dcompiler.h>
 #include <DxErr.h>
 
@@ -59,23 +62,74 @@ namespace Plasmogrify
                 scd.OutputWindow = hWnd; 
                 scd.Windowed = TRUE; 
                 scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-                scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+                //scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
                 D3D_DRIVER_TYPE driverType = D3D_DRIVER_TYPE_HARDWARE;
 
-                hr = D3D11CreateDeviceAndSwapChain( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, &mpContext );
+                hr = D3D11CreateDeviceAndSwapChain( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, mpContext->GetContextPtr() );
                 HRTRACE(hr, L"Failed to Create Device and Swap Chain.");
 
-                // TODO: This method fails.  Why?
+                
+                HRESULT result;
 
-                //HRESULT result;
+                IDXGIFactory* pFactory;
+                result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory));
+                HRTRACE(result, L"Failed to Create DXGI Factory.");
+
+                // Count Adapters and check properties.
+                //char buffer[5000];
+                //uint8_t adapterCount = 0; 
+                //IDXGIAdapter* pAdapter; 
+                //std::vector <IDXGIAdapter*> vAdapters; 
+                //while(pFactory->EnumAdapters(adapterCount, &pAdapter) != DXGI_ERROR_NOT_FOUND) 
+                //{ 
+	            //    vAdapters.push_back(pAdapter); 
+                //    LARGE_INTEGER version10 = {0,0};
+                //    LARGE_INTEGER version11 = {0,0};
+                //    HRESULT v11 = pAdapter->CheckInterfaceSupport(__uuidof(ID3D11Device), &version11);
+                //    HRESULT v10 = pAdapter->CheckInterfaceSupport(__uuidof(ID3D10Device), &version10);
+                //
+                //    UINT outputCount = 0;
+                //    IDXGIOutput* pOutput;
+                //    std::vector<IDXGIOutput*> vOutputs;
+                //    while(pAdapter->EnumOutputs(outputCount, &pOutput) != DXGI_ERROR_NOT_FOUND)
+                //    {
+                //        vOutputs.push_back(pOutput);
+                //
+                //        uint32_t num = 0;
+                //        DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM;
+                //        pOutput->GetDisplayModeList( format, 0, &num, 0);
+                //
+                //        DXGI_MODE_DESC * pDescs = new DXGI_MODE_DESC[num];
+                //        pOutput->GetDisplayModeList( format, 0, &num, pDescs);
+                //
+                //        sprintf(buffer, "Adapter %d: Output %d", adapterCount, outputCount);
+                //        char temp[64];
+                //        for (uint32_t i = 0; i < num; ++i )
+                //        {
+                //            sprintf(temp, "Width: %d, Height: %d, Refresh: %d/%d\n", pDescs[i].Width, pDescs[i].Height, pDescs[i].RefreshRate.Numerator, pDescs[i].RefreshRate.Denominator);
+                //            strcat(buffer, temp);
+                //        }
+                //
+                //        MessageBox(NULL, buffer, "Output", MB_OK); 
+                //
+                //        ++outputCount;
+                //    }
+                //
+                //    sprintf(buffer, "Adapter %d: DX10: %s, DX11: %s, Outputs: %d", adapterCount, v10 == S_OK ? "Yes" : "No", v11 == S_OK ? "Yes" : "No", outputCount );
+                //    MessageBox(NULL, buffer, "Outputs", MB_OK); 
+                //
+	            //    ++adapterCount; 
+                //} 
+
+                //sprintf(buffer, "Adapter Count is %d\n", adapterCount);
+                //MessageBox(NULL, buffer, "Adapters", MB_OK); 
+
+                // TODO: This method fails of creating device and swap chain fails on CreateSwapChain, which returns 'DXGI_ERROR_INVALID_CALL'.  Why?
+
                 //result = D3D11CreateDevice( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &mpDevice, NULL, &mpContext);
                 //HRTRACE(result, L"Failed to create D3D11 Device.");
 
-                //IDXGIFactory* pFactory;
-                //result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory));
-                //HRTRACE(result, L"Failed to Create DXGI Factory.");
-                
                 //result = pFactory->CreateSwapChain(mpDevice, &scd, &mpSwapChain);
                 //HRTRACE(result, L"Failed to create swap chain");
 
@@ -144,7 +198,9 @@ namespace Plasmogrify
                 HRTRACE(result, L"Failed to init depth stencil buffer.");
                 hr |= result;
 
-                mpContext->OMSetRenderTargets( 1, &mpRenderTargetView, mpDepthStencilView );
+                result = mpContext->SetRenderTargets( 1, &mpRenderTargetView, mpDepthStencilView );
+                HRTRACE(result, L"Failed to set render targets.");
+                hr |= result;
 
                 return hr;
             }
@@ -152,6 +208,8 @@ namespace Plasmogrify
 
             HRESULT Device::InitViewport(uint32_t width, uint32_t height)
             {
+                HRESULT hr = S_OK;
+
                 D3D11_VIEWPORT viewport;
                 ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
 
@@ -162,9 +220,10 @@ namespace Plasmogrify
                 viewport.TopLeftX = 0;
                 viewport.TopLeftY = 0;
 
-                mpContext->RSSetViewports( 1, &viewport );
+                hr = mpContext->SetViewports( 1, &viewport );
+                HRTRACE(hr, L"Failed to set viewport.");
 
-                return S_OK;
+                return hr;
             }
 
             HRESULT CompileShaderFromFile( char* szFileName, char* szEntryPoint, char* szShaderModel, ID3DBlob** ppBlobOut )
@@ -213,7 +272,9 @@ namespace Plasmogrify
 
                 if (pVSBlob) pVSBlob->Release();
 
-                mpContext->IASetInputLayout( mpVertexLayout );
+                result = mpContext->SetInputLayout( mpVertexLayout );
+                HRTRACE(result, L"Failed to set input layout.");
+                hr |= result;
 
                 ID3DBlob* pPSBlob = NULL;
                 result = CompileShaderFromFile( "Shaders/generic.fx", "PS", "ps_4_0", &pPSBlob );
@@ -260,9 +321,9 @@ namespace Plasmogrify
 
                 UINT stride = sizeof( Vertex );
                 UINT offset = 0; // sizeof(Vertex) * 3;
-                mpContext->IASetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
+                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
 
-                mpContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+                mpContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
                 return hr;
 
@@ -283,9 +344,16 @@ namespace Plasmogrify
                 UINT width = rc.right - rc.left;
                 UINT height = rc.bottom - rc.top;
 
+                mpContext = new Context();
+
                 result = InitDeviceAndSwapChain(hWnd, width, height);
                 HRTRACE(result, L"Failed to init Device and Swap Chain.");
                 hr |= result;
+
+                //To disable DXGI monitoring message queue.
+                //IDXGIFactory* pFactory;
+                //HRESULT sresult = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory));
+                //pFactory->MakeWindowAssociation(hWnd, DXGI_MWA_NO_WINDOW_CHANGES);
 
                 InitRenderTargets(width, height);
                 HRTRACE(result, L"Failed to init render targets.");
@@ -313,16 +381,18 @@ namespace Plasmogrify
 
             }
 
+            void Device::PreRender()
+            {
+                mpContext->PreDraw(mpRenderTargetView, mpDepthStencilView);
+            }
+
             void Device::Render()
             {
-                float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; //red,green,blue,alpha
-                mpContext->ClearRenderTargetView( mpRenderTargetView, ClearColor );
-                mpContext->ClearDepthStencilView( mpDepthStencilView, D3D10_CLEAR_DEPTH|D3D10_CLEAR_STENCIL, 1.0f, 0);
+                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList.GetVertexCount() );
+            }
 
-                mpContext->VSSetShader( mpVertexShader, NULL, 0 );
-                mpContext->PSSetShader( mpPixelShader, NULL, 0 );
-                mpContext->Draw( mVertexList.GetVertexCount(), 0 );
-
+            void Device::PostRender()
+            {
                 mpSwapChain->Present( 0, 0 );
             }
 

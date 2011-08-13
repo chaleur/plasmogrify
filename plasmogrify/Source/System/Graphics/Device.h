@@ -21,6 +21,8 @@ namespace Plasmogrify
     {
         namespace Graphics
         {
+            class Context;
+
             class Device
             {
                 public:
@@ -28,7 +30,11 @@ namespace Plasmogrify
                     ~Device();
 
                     HRESULT Init(HWND hWnd);
+                    
+                    void PreRender();
                     void Render();
+                    void PostRender();
+
                     void Cleanup();
 
                 private:
@@ -47,7 +53,8 @@ namespace Plasmogrify
                 private:
 
                     ID3D11Device*           mpDevice;
-                    ID3D11DeviceContext*    mpContext;
+                    Context*                mpContext;
+
                     IDXGISwapChain*         mpSwapChain;
                     ID3D11RenderTargetView* mpRenderTargetView;
                     ID3D11Texture2D*        mpDepthStencilBuffer;

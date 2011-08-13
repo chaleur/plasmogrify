@@ -173,7 +173,10 @@ namespace Plasmogrify
                 {
                     timer.Tick();
                     mpWorldData->Update(timer.GetDeltaTime());
+
+                    mpDevice->PreRender();
                     mpDevice->Render();
+                    mpDevice->PostRender();
                 }
             }
 

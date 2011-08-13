@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\System\Graphics\Context.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp" />
     <ClCompile Include="Source\System\Graphics\Font.cpp" />
     <ClCompile Include="Source\System\Graphics\Geometry.cpp" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Config.h" />
+    <ClInclude Include="Source\System\Graphics\Context.h" />
     <ClInclude Include="Source\System\Graphics\Device.h" />
     <ClInclude Include="Source\System\Graphics\Font.h" />
     <ClInclude Include="Source\System\Graphics\Geometry.h" />
