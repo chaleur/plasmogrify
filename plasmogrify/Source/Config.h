@@ -7,6 +7,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_CONFIG
+
 #include <tchar.h>
 
 typedef  __int8           int8_t;
@@ -52,3 +54,5 @@ typedef  double           double_t;
 #ifndef NULL 
     #define NULL 0
 #endif
+
+#endif // PLASMOGRIFY_CONFIG

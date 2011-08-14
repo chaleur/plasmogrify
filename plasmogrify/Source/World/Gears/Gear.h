@@ -7,10 +7,22 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_WORLD_GEAR
+#define PLASMOGRIFY_WORLD_GEAR
+
 #include "../../System/Graphics/Geometry.h"
 
 namespace Plasmogrify
 {
+    namespace System
+    {
+        namespace Graphics
+        {
+            class Context;
+            class Device;
+        }
+    }
+
     namespace World
     {
         namespace Gears
@@ -22,9 +34,9 @@ namespace Plasmogrify
                     ~Gear();
 
                 public:
-                    void Init();
+                    void Init(System::Graphics::Device* pDevice);
                     void Update(float dt);
-                    void Draw();
+                    void Draw(System::Graphics::Context* pContext);
 
                 private:
                     bool                              mbInit;
@@ -34,3 +46,5 @@ namespace Plasmogrify
         } // namespace Gears
     } // namespace World
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_WORLD_GEAR

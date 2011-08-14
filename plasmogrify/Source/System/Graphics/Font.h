@@ -7,6 +7,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_SYSTEM_GRAPHICS_FONT
+#define PLASMOGRIFY_SYSTEM_GRAPHICS_FONT
+
 #include "../../Config.h"
 #include <d3d11.h>
 #include <xnamath.h>
@@ -68,3 +71,5 @@ namespace Plasmogrify
         } // namespace Graphics
     } // namespace System
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_SYSTEM_GRAPHICS_FONT

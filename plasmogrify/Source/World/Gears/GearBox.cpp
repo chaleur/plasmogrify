@@ -31,16 +31,21 @@ namespace Plasmogrify
                 }
             }
 
-            void GearBox::Init()
+            void GearBox::Init(System::Graphics::Device *pDevice)
             {
                 mbInit = true;
                 mpGear = new Gear();
-                mpGear->Init();
+                mpGear->Init(pDevice);
             }
 
             void GearBox::Update(float dt)
             {
                 mpGear->Update(dt);
+            }
+
+            void GearBox::Draw(System::Graphics::Context* pContext)
+            {
+                mpGear->Draw(pContext);
             }
 
         } // namespace Gears

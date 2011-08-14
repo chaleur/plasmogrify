@@ -7,6 +7,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_APPLICATION
+#define PLASMOGRIFY_APPLICATION
+
 #include "Config.h"
 #include <windows.h>
 
@@ -39,6 +42,7 @@ namespace Plasmogrify
             private:
                 void InitWindow(HINSTANCE hInstance, int nCmdShow);
                 void InitDevice();
+                void InitWorld();
 
             private:
 
@@ -51,3 +55,5 @@ namespace Plasmogrify
 
     } // namespace Application
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_APPLICATION

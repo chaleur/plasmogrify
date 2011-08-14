@@ -29,18 +29,20 @@ namespace Plasmogrify
                 }
             }
 
-            void Gear::Init()
+            void Gear::Init(System::Graphics::Device *pDevice)
             {
                 mbInit = true;
                 mpVertexList = new System::Graphics::VertexList();
+                mpVertexList->Init(pDevice, System::Graphics::VertexList::kTriangle_Type1);
             }
 
             void Gear::Update(float dt)
             {
             }
 
-            void Gear::Draw()
+            void Gear::Draw(System::Graphics::Context* pContext)
             {
+                mpVertexList->Draw(pContext);
             }
 
         } // namespace Gears

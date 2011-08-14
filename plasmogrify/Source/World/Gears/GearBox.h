@@ -7,8 +7,20 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_WORLD_GEARBOX
+#define PLASMOGRIFY_WORLD_GEARBOX
+
 namespace Plasmogrify
 {
+    namespace System
+    {
+        namespace Graphics
+        {
+            class Context;
+            class Device;
+        }
+    }
+
     namespace World
     {
         namespace Gears
@@ -21,8 +33,10 @@ namespace Plasmogrify
                     GearBox();
                     ~GearBox();
 
-                    void Init();
+                    void Init(System::Graphics::Device *pDevice);
                     void Update(float dt);
+
+                    void Draw(System::Graphics::Context* pContext);
 
                 private:
                     bool                mbInit;
@@ -34,3 +48,5 @@ namespace Plasmogrify
         } // namespace Gears
     } // namespace World
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_WORLD_GEARBOX

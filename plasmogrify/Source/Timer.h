@@ -7,6 +7,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_APPLICATION_TIMER
+#define PLASMOGRIFY_APPLICATION_TIMER
+
 #include "Config.h"
 #include <windows.h>
 
@@ -31,3 +34,5 @@ namespace Plasmogrify
 
     } // namespace Application
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_APPLICATION_TIMER

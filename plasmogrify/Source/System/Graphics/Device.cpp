@@ -33,13 +33,28 @@ namespace Plasmogrify
                 , mpVertexBuffer0(NULL)
                 , mpVertexBuffer1(NULL)
             {
-                mVertexList0.Init(VertexList::kTriangle_Type0);
-                mVertexList1.Init(VertexList::kTriangle_Type1);
+                //mVertexList0.Init(this, VertexList::kTriangle_Type0);
+                //mVertexList1.Init(this, VertexList::kTriangle_Type1);
             }
 
             Device::~Device()
             {
 
+            }
+
+            Context* Device::GetRenderContext()
+            {
+                return mpContext;
+            }
+
+            ID3D11VertexShader* Device::GetVertexShader()
+            {
+                return mpVertexShader;
+            }
+
+            ID3D11PixelShader* Device::GetPixelShader()
+            {
+                return mpPixelShader;
             }
 
             HRESULT Device::InitDeviceAndSwapChain(HWND hWnd, uint32_t width, uint32_t height)
@@ -297,31 +312,21 @@ namespace Plasmogrify
             {
                 HRESULT hr = S_OK;
 
-                Vertex verts[] =
-                {
-                    {XMFLOAT3(0.0f, 0.5f, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
-                    {XMFLOAT3(0.45f, 0.0f, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
-                    {XMFLOAT3(-0.45f, 0.0f, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)},
-                    {XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)},
-                    {XMFLOAT3(0.45f, -0.5f, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)},
-                    {XMFLOAT3(-0.45f, -0.5f, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)}
-                };
+                //D3D11_BUFFER_DESC bd;
+                //ZeroMemory( &bd, sizeof(bd) );
+                //bd.Usage = D3D11_USAGE_DYNAMIC;
+                //bd.ByteWidth = sizeof( Vertex ) * 6;
+                //bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+                //bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-                D3D11_BUFFER_DESC bd;
-                ZeroMemory( &bd, sizeof(bd) );
-                bd.Usage = D3D11_USAGE_DYNAMIC;
-                bd.ByteWidth = sizeof( Vertex ) * 6;
-                bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-                bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+                //D3D11_SUBRESOURCE_DATA srd;
+                //srd.pSysMem = mVertexList0.GetVertexList();
 
-                D3D11_SUBRESOURCE_DATA srd;
-                srd.pSysMem = mVertexList0.GetVertexList();
+                //mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer0 );
 
-                mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer0 );
+                //srd.pSysMem = mVertexList1.GetVertexList();
 
-                srd.pSysMem = mVertexList1.GetVertexList();
-
-                mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer1 );
+                //mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer1 );
 
                 //Alternate mapping method.
                 //D3D11_MAPPED_SUBRESOURCE ms;
@@ -392,6 +397,11 @@ namespace Plasmogrify
 
             }
 
+            void Device::CreateBuffer(D3D11_BUFFER_DESC* pDesc, D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Buffer** ppBuffer)
+            {
+                mpDevice->CreateBuffer(pDesc, pInitialData, ppBuffer );
+            }
+
             void Device::PreRender()
             {
                 mpContext->PreDraw(mpRenderTargetView, mpDepthStencilView);
@@ -399,15 +409,14 @@ namespace Plasmogrify
 
             void Device::Render()
             {
-                UINT stride = sizeof( Vertex );
-                UINT offset = 0; // sizeof(Vertex) * 3;
+                //UINT stride = sizeof( Vertex );
+                //UINT offset = 0; // sizeof(Vertex) * 3;
 
-                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer0, &stride, &offset );
-                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList0.GetVertexCount() );
-
+                //mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer0, &stride, &offset );
+                //mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList0.GetVertexCount() );
                 
-                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer1, &stride, &offset );
-                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList1.GetVertexCount() );
+                //mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer1, &stride, &offset );
+                //mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList1.GetVertexCount() );
             }
 
             void Device::PostRender()
@@ -419,8 +428,8 @@ namespace Plasmogrify
             {
                 if (mpContext) mpContext->ClearState();
 
-                if (mpVertexBuffer0) mpVertexBuffer0->Release();
-                if (mpVertexBuffer1) mpVertexBuffer1->Release();
+                //if (mpVertexBuffer0) mpVertexBuffer0->Release();
+                //if (mpVertexBuffer1) mpVertexBuffer1->Release();
                 if (mpVertexLayout) mpVertexLayout->Release();
                 if (mpPixelShader) mpPixelShader->Release();
                 if (mpVertexShader) mpVertexShader->Release();

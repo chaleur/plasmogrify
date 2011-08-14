@@ -7,8 +7,20 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_WORLDDATA
+#define PLASMOGRIFY_WORLDDATA
+
 namespace Plasmogrify
 {
+    namespace System
+    {
+        namespace Graphics
+        {
+            class Context;
+            class Device;
+        }
+    }
+
     namespace World
     {
         namespace Gears
@@ -22,8 +34,10 @@ namespace Plasmogrify
                 WorldData();
                 ~WorldData();
 
-                void Init();
+                void Init(System::Graphics::Device* pDevice);
                 void Update(float dt);
+
+                void Draw(System::Graphics::Context* pContext);
 
             private:
                 bool                   mbInit;
@@ -33,3 +47,5 @@ namespace Plasmogrify
 
     } // namespace World
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_WORLDDATA

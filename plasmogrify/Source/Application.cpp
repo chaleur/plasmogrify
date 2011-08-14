@@ -104,15 +104,19 @@ namespace Plasmogrify
         {
             mpDevice = new System::Graphics::Device();
             mpDevice->Init(mHWND);
+        }
 
+        void Application::InitWorld()
+        {
             mpWorldData = new World::WorldData();
-            mpWorldData->Init();
+            mpWorldData->Init(mpDevice);
         }
 
         void Application::Init(HINSTANCE hInstance, int nCmdShow)
         {
             InitWindow(hInstance, nCmdShow);
             InitDevice();
+            InitWorld();
             mbInit = true;
         }
 
@@ -175,7 +179,7 @@ namespace Plasmogrify
                     mpWorldData->Update(timer.GetDeltaTime());
 
                     mpDevice->PreRender();
-                    mpDevice->Render();
+                    mpWorldData->Draw( mpDevice->GetRenderContext() );
                     mpDevice->PostRender();
                 }
             }

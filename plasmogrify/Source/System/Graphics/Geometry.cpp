@@ -8,6 +8,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Geometry.h"
+#include "Device.h"
+#include "Context.h"
 #include <math.h>
 
 namespace Plasmogrify
@@ -16,9 +18,11 @@ namespace Plasmogrify
     {
         namespace Graphics
         {
-
             VertexList::VertexList()
-                : mpVertexList(NULL)
+                : mpVertexBuffer(NULL)
+                , mpVertexShader(NULL)
+                , mpPixelShader(NULL)
+                , mpVertexList(NULL)
                 , mVertexCount(0)
             {
             }
@@ -31,9 +35,33 @@ namespace Plasmogrify
                 }
             }
 
-            void VertexList::Init(eTriangleType type)
+            void VertexList::Init(Device* pDevice, eTriangleType type)
             {
                 BuildGear(type);
+
+                D3D11_BUFFER_DESC bd;
+                ZeroMemory( &bd, sizeof(bd) );
+                bd.Usage = D3D11_USAGE_DYNAMIC;
+                bd.ByteWidth = sizeof( Vertex ) * 6;
+                bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+                bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+                D3D11_SUBRESOURCE_DATA srd;
+                srd.pSysMem = mpVertexList;
+
+                pDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer );
+
+                mpVertexShader = pDevice->GetVertexShader();
+                mpPixelShader = pDevice->GetPixelShader();
+            }
+
+            void VertexList::Draw(Context* pContext)
+            {
+                uint32_t stride = sizeof( Vertex );
+                uint32_t offset = 0; // sizeof(Vertex) * 3;
+
+                pContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
+                pContext->Draw(mpVertexShader, mpPixelShader, mVertexCount);
             }
 
             Vertex* VertexList::GetVertexList()
@@ -65,13 +93,6 @@ namespace Plasmogrify
                 mpVertexList = new Vertex[mVertexCount];
 
                 XMFLOAT3 center = XMFLOAT3(0.45f, 0.00f, 0.0f);
-
-                // mpVertexList[0].Pos = XMFLOAT3(0.0f, 0.5f, 0.0f);
-                // mpVertexList[1].Pos = XMFLOAT3(0.45f, 0.0f, 0.0f);
-                // mpVertexList[2].Pos = XMFLOAT3(-0.B45f, 0.0f, 0.0f);
-                // mpVertexList[3].Pos = XMFLOAT3(0.0f, 0.0f, 0.0f)
-                // mpVertexList[4].Pos = XMFLOAT3(0.45f, -0.5f, 0.0f);
-                //mpVertexList[5].Pos = XMFLOAT3(-0.45f, 0.5f, 0.0f);
                 
                 switch ( type )
                 {

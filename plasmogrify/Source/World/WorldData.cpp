@@ -26,17 +26,21 @@ namespace Plasmogrify
         {
         }
 
-        void WorldData::Init()
+        void WorldData::Init(System::Graphics::Device* pDevice)
         {
             mbInit = true;
-
             mpGearBox = new Gears::GearBox();
-            mpGearBox->Init();
+            mpGearBox->Init(pDevice);
         }
 
         void WorldData::Update(float dt)
         {
             mpGearBox->Update(dt);
+        }
+
+        void WorldData::Draw(System::Graphics::Context* pContext)
+        {
+            mpGearBox->Draw(pContext);
         }
 
     } // namespace World

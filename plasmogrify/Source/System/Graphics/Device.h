@@ -7,6 +7,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_SYSTEM_GRAPHICS_DEVICE
+#define PLASMOGRIFY_SYSTEM_GRAPHICS_DEVICE
+
 #include "../../Config.h"
 #include <windows.h>
 #include <d3d11.h>
@@ -30,12 +33,18 @@ namespace Plasmogrify
                     ~Device();
 
                     HRESULT Init(HWND hWnd);
+
+                    void CreateBuffer(D3D11_BUFFER_DESC* pDesc, D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Buffer** ppBuffer);
                     
                     void PreRender();
                     void Render();
                     void PostRender();
 
                     void Cleanup();
+
+                    Context* GetRenderContext();
+                    ID3D11VertexShader* GetVertexShader();
+                    ID3D11PixelShader* GetPixelShader();
 
                 private:
 
@@ -75,3 +84,5 @@ namespace Plasmogrify
         } // namespace Graphics
     } // namespace System
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_SYSTEM_GRAPHICS_DEVICE

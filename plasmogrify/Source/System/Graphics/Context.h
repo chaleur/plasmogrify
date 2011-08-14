@@ -7,6 +7,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef PLASMOGRIFY_SYSTEM_GRAPHICS_CONTEXT
+#define PLASMOGRIFY_SYSTEM_GRAPHICS_CONTEXT
+
 #include "../../Config.h"
 #include <d3d11.h>
 
@@ -44,3 +47,5 @@ namespace Plasmogrify
         } // namespace Graphics
     } // namespace System
 } // namespace Plasmogrify
+
+#endif // PLASMOGRIFY_SYSTEM_GRAPHICS_CONTEXT
