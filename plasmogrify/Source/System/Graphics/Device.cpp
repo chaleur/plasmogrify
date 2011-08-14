@@ -30,9 +30,11 @@ namespace Plasmogrify
                 , mpVertexShader(NULL)
                 , mpPixelShader(NULL)
                 , mpVertexLayout(NULL)
-                , mpVertexBuffer(NULL)
+                , mpVertexBuffer0(NULL)
+                , mpVertexBuffer1(NULL)
             {
-
+                mVertexList0.Init(VertexList::kTriangle_Type0);
+                mVertexList1.Init(VertexList::kTriangle_Type1);
             }
 
             Device::~Device()
@@ -312,16 +314,25 @@ namespace Plasmogrify
                 bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
                 bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-                mpDevice->CreateBuffer( &bd, NULL, &mpVertexBuffer );
-                D3D11_MAPPED_SUBRESOURCE ms;
-                hr = mpContext->Map(mpVertexBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
-                HRTRACE(hr, L"Failed to map vertex buffer."); 
-                memcpy(ms.pData, mVertexList.GetVertexList(), mVertexList.GetVertexListSize()); 
-                mpContext->Unmap(mpVertexBuffer, NULL);
+                D3D11_SUBRESOURCE_DATA srd;
+                srd.pSysMem = mVertexList0.GetVertexList();
 
-                UINT stride = sizeof( Vertex );
-                UINT offset = 0; // sizeof(Vertex) * 3;
-                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
+                mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer0 );
+
+                srd.pSysMem = mVertexList1.GetVertexList();
+
+                mpDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer1 );
+
+                //Alternate mapping method.
+                //D3D11_MAPPED_SUBRESOURCE ms;
+                //hr = mpContext->Map(mpVertexBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
+                //HRTRACE(hr, L"Failed to map vertex buffer."); 
+                //memcpy(ms.pData, mVertexList.GetVertexList(), mVertexList.GetVertexListSize()); 
+                //mpContext->Unmap(mpVertexBuffer, NULL);
+
+                //UINT stride = sizeof( Vertex );
+                //UINT offset = 0; // sizeof(Vertex) * 3;
+                //mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer0, &stride, &offset );
 
                 mpContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
@@ -388,7 +399,15 @@ namespace Plasmogrify
 
             void Device::Render()
             {
-                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList.GetVertexCount() );
+                UINT stride = sizeof( Vertex );
+                UINT offset = 0; // sizeof(Vertex) * 3;
+
+                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer0, &stride, &offset );
+                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList0.GetVertexCount() );
+
+                
+                mpContext->SetVertexBuffers( 0, 1, &mpVertexBuffer1, &stride, &offset );
+                mpContext->Draw(mpVertexShader, mpPixelShader, mVertexList1.GetVertexCount() );
             }
 
             void Device::PostRender()
@@ -400,7 +419,8 @@ namespace Plasmogrify
             {
                 if (mpContext) mpContext->ClearState();
 
-                if (mpVertexBuffer) mpVertexBuffer->Release();
+                if (mpVertexBuffer0) mpVertexBuffer0->Release();
+                if (mpVertexBuffer1) mpVertexBuffer1->Release();
                 if (mpVertexLayout) mpVertexLayout->Release();
                 if (mpPixelShader) mpPixelShader->Release();
                 if (mpVertexShader) mpVertexShader->Release();

@@ -26,17 +26,27 @@ namespace Plasmogrify
             class VertexList
             {
                 public:
+                    enum eTriangleType
+                    {
+                        kTriangle_Type0,
+                        kTriangle_Type1
+                    };
+
+                public:
                     VertexList();
                     ~VertexList();
 
+                    void        Init(eTriangleType type);
+
                     Vertex*     GetVertexList();
                     size_t      GetVertexListSize();
-
                     uint32_t    GetVertexCount();
 
                     void Update();
 
-                    void BuildGear();
+                private:
+
+                    void BuildGear(eTriangleType type);
 
                 private:
                     

@@ -21,8 +21,6 @@ namespace Plasmogrify
                 : mpVertexList(NULL)
                 , mVertexCount(0)
             {
-                BuildGear();
-
             }
 
             VertexList::~VertexList()
@@ -31,6 +29,11 @@ namespace Plasmogrify
                 {
                     delete[] mpVertexList;
                 }
+            }
+
+            void VertexList::Init(eTriangleType type)
+            {
+                BuildGear(type);
             }
 
             Vertex* VertexList::GetVertexList()
@@ -48,7 +51,7 @@ namespace Plasmogrify
                 return mVertexCount;
             }
 
-            void VertexList::BuildGear()
+            void VertexList::BuildGear(eTriangleType type)
             {
                 if (mpVertexList)
                 {
@@ -65,10 +68,24 @@ namespace Plasmogrify
 
                 // mpVertexList[0].Pos = XMFLOAT3(0.0f, 0.5f, 0.0f);
                 // mpVertexList[1].Pos = XMFLOAT3(0.45f, 0.0f, 0.0f);
-                // mpVertexList[2].Pos = XMFLOAT3(-0.45f, 0.0f, 0.0f);
+                // mpVertexList[2].Pos = XMFLOAT3(-0.B45f, 0.0f, 0.0f);
                 // mpVertexList[3].Pos = XMFLOAT3(0.0f, 0.0f, 0.0f)
                 // mpVertexList[4].Pos = XMFLOAT3(0.45f, -0.5f, 0.0f);
                 //mpVertexList[5].Pos = XMFLOAT3(-0.45f, 0.5f, 0.0f);
+                
+                switch ( type )
+                {
+                    case kTriangle_Type0:
+                    {
+                        center = XMFLOAT3(0.00f, 0.10f, 0.0f);
+                        break;
+                    }
+                    case kTriangle_Type1:
+                    {
+                        center = XMFLOAT3(0.00f, -0.45f, 0.0f);
+                        break;
+                    }
+                }
 
                 for (uint32_t i = 0; i < segments; ++i)
                 {
@@ -76,13 +93,13 @@ namespace Plasmogrify
 
                     float angle = (float)i / (2.0f * 3.1415926f);
 
-                    mpVertexList[offset + 0].Pos =    XMFLOAT3(0.0f, 0.5f, 0.0f);
+                    mpVertexList[offset + 0].Pos =    XMFLOAT3(0.0f, 0.5f + center.y, 0.0f);
                     mpVertexList[offset + 0].Colour = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 
-                    mpVertexList[offset + 1].Pos =    XMFLOAT3(0.45f, 0.0f, 0.0f);
+                    mpVertexList[offset + 1].Pos =    XMFLOAT3(0.45f, 0.0f + center.y, 0.0f) ;
                     mpVertexList[offset + 1].Colour = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 
-                    mpVertexList[offset + 2].Pos =    XMFLOAT3(-0.45f, 0.0f, 0.0f);
+                    mpVertexList[offset + 2].Pos =    XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f);
                     mpVertexList[offset + 2].Colour = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
                 }
 

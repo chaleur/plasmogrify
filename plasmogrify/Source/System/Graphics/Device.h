@@ -62,10 +62,12 @@ namespace Plasmogrify
                     ID3D11VertexShader*     mpVertexShader;
                     ID3D11PixelShader*      mpPixelShader;
                     ID3D11InputLayout*      mpVertexLayout;
-                    ID3D11Buffer*           mpVertexBuffer;
+                    
+                    ID3D11Buffer*           mpVertexBuffer0;
+                    ID3D11Buffer*           mpVertexBuffer1;
 
-                    VertexList              mVertexList;
                     VertexList              mVertexList0;
+                    VertexList              mVertexList1;
 
                     
             };
