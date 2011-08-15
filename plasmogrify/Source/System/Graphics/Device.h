@@ -16,8 +16,6 @@
 #include <d3dx11.h>
 #include <xnamath.h>
 
-#include "Geometry.h"
-
 namespace Plasmogrify
 {
     namespace System
@@ -71,14 +69,6 @@ namespace Plasmogrify
                     ID3D11VertexShader*     mpVertexShader;
                     ID3D11PixelShader*      mpPixelShader;
                     ID3D11InputLayout*      mpVertexLayout;
-                    
-                    ID3D11Buffer*           mpVertexBuffer0;
-                    ID3D11Buffer*           mpVertexBuffer1;
-
-                    VertexList              mVertexList0;
-                    VertexList              mVertexList1;
-
-                    
             };
 
         } // namespace Graphics

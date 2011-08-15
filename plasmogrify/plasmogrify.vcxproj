@@ -16,7 +16,7 @@
     <ClCompile Include="Source\System\Graphics\Context.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp" />
     <ClCompile Include="Source\System\Graphics\Font.cpp" />
-    <ClCompile Include="Source\System\Graphics\Geometry.cpp" />
+    <ClCompile Include="Source\System\Graphics\Model.cpp" />
     <ClCompile Include="Source\System\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\World\Gears\Gear.cpp" />
@@ -29,7 +29,7 @@
     <ClInclude Include="Source\System\Graphics\Context.h" />
     <ClInclude Include="Source\System\Graphics\Device.h" />
     <ClInclude Include="Source\System\Graphics\Font.h" />
-    <ClInclude Include="Source\System\Graphics\Geometry.h" />
+    <ClInclude Include="Source\System\Graphics\Model.h" />
     <ClInclude Include="Source\System\Graphics\Texture.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\World\Gears\Gear.h" />

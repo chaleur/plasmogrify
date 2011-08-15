@@ -1,14 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// \\\ file        Geometry.h
+// \\\ file        Model.h
 // \\\ author      Kaye Mason
 // \\\ copyright   2011
-// \\\ brief       Plasma Geometry Definitions
+// \\\ brief       Plasma Model Definitions
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef PLASMOGRIFY_SYSTEM_GRAPHICS_GEOMETRY
-#define PLASMOGRIFY_SYSTEM_GRAPHICS_GEOMETRY
+#ifndef PLASMOGRIFY_SYSTEM_GRAPHICS_MODEL
+#define PLASMOGRIFY_SYSTEM_GRAPHICS_MODEL
 
 #include "../../Config.h"
 #include <d3d11.h>
@@ -29,7 +29,7 @@ namespace Plasmogrify
                 XMFLOAT4 Colour;
             };
 
-            class VertexList
+            class Model
             {
                 public:
                     enum eTriangleType
@@ -39,8 +39,8 @@ namespace Plasmogrify
                     };
 
                 public:
-                    VertexList();
-                    ~VertexList();
+                    Model();
+                    ~Model();
 
                     void        Init(Device* pDevice, eTriangleType type);
 
@@ -70,4 +70,4 @@ namespace Plasmogrify
     } // namespace System
 } // namespace Plasmogrify
 
-#endif // PLASMOGRIFY_SYSTEM_GRAPHICS_GEOMETRY
+#endif // PLASMOGRIFY_SYSTEM_GRAPHICS_MODEL

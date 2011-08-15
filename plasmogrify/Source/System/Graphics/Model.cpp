@@ -1,13 +1,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// \\\ file        Geometry.cpp
+// \\\ file        Model.cpp
 // \\\ author      Kaye Mason
 // \\\ copyright   2011
-// \\\ brief       Plasmogrify Geometry Definitions
+// \\\ brief       Plasmogrify Model Definitions
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "Geometry.h"
+#include "Model.h"
 #include "Device.h"
 #include "Context.h"
 #include <math.h>
@@ -18,7 +18,7 @@ namespace Plasmogrify
     {
         namespace Graphics
         {
-            VertexList::VertexList()
+            Model::Model()
                 : mpVertexBuffer(NULL)
                 , mpVertexShader(NULL)
                 , mpPixelShader(NULL)
@@ -27,7 +27,7 @@ namespace Plasmogrify
             {
             }
 
-            VertexList::~VertexList()
+            Model::~Model()
             {
                 if (mpVertexList)
                 {
@@ -35,7 +35,7 @@ namespace Plasmogrify
                 }
             }
 
-            void VertexList::Init(Device* pDevice, eTriangleType type)
+            void Model::Init(Device* pDevice, eTriangleType type)
             {
                 BuildGear(type);
 
@@ -55,7 +55,7 @@ namespace Plasmogrify
                 mpPixelShader = pDevice->GetPixelShader();
             }
 
-            void VertexList::Draw(Context* pContext)
+            void Model::Draw(Context* pContext)
             {
                 uint32_t stride = sizeof( Vertex );
                 uint32_t offset = 0; // sizeof(Vertex) * 3;
@@ -64,22 +64,22 @@ namespace Plasmogrify
                 pContext->Draw(mpVertexShader, mpPixelShader, mVertexCount);
             }
 
-            Vertex* VertexList::GetVertexList()
+            Vertex* Model::GetVertexList()
             {
                 return mpVertexList;
             }
 
-            size_t VertexList::GetVertexListSize()
+            size_t Model::GetVertexListSize()
             {
-                return sizeof(Vertex) * mVertexCount;
+                return sizeof(Vertex)* mVertexCount;
             }
 
-            uint32_t VertexList::GetVertexCount()
+            uint32_t Model::GetVertexCount()
             {
                 return mVertexCount;
             }
 
-            void VertexList::BuildGear(eTriangleType type)
+            void Model::BuildGear(eTriangleType type)
             {
                 if (mpVertexList)
                 {
@@ -130,7 +130,7 @@ namespace Plasmogrify
             static float sign1 = 1.0f;
             static float sign2 = 1.0f;
 
-            void VertexList::Update()
+            void Model::Update()
             {
                 mpVertexList[0].Pos.y += sign0 * 0.01f;
                 if ( (mpVertexList[0].Pos.y > 0.8f) || (mpVertexList[0].Pos.y < 0.8f) )

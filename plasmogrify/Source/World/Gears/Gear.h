@@ -10,7 +10,7 @@
 #ifndef PLASMOGRIFY_WORLD_GEAR
 #define PLASMOGRIFY_WORLD_GEAR
 
-#include "../../System/Graphics/Geometry.h"
+#include "../../System/Graphics/Model.h"
 
 namespace Plasmogrify
 {
@@ -40,7 +40,7 @@ namespace Plasmogrify
 
                 private:
                     bool                              mbInit;
-                    System::Graphics::VertexList*     mpVertexList;
+                    System::Graphics::Model*          mpModel;
             };
 
         } // namespace Gears

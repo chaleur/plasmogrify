@@ -17,23 +17,23 @@ namespace Plasmogrify
         {
             Gear::Gear()
                 : mbInit(false)
-                , mpVertexList(NULL)
+                , mpModel(NULL)
             {
             }
 
             Gear::~Gear()
             {
-                if (mpVertexList)
+                if (mpModel)
                 {
-                    delete mpVertexList;
+                    delete mpModel;
                 }
             }
 
             void Gear::Init(System::Graphics::Device *pDevice)
             {
                 mbInit = true;
-                mpVertexList = new System::Graphics::VertexList();
-                mpVertexList->Init(pDevice, System::Graphics::VertexList::kTriangle_Type1);
+                mpModel = new System::Graphics::Model();
+                mpModel->Init(pDevice, System::Graphics::Model::kTriangle_Type1);
             }
 
             void Gear::Update(float dt)
@@ -42,7 +42,7 @@ namespace Plasmogrify
 
             void Gear::Draw(System::Graphics::Context* pContext)
             {
-                mpVertexList->Draw(pContext);
+                mpModel->Draw(pContext);
             }
 
         } // namespace Gears
