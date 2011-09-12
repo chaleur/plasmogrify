@@ -33,6 +33,15 @@ namespace Plasmogrify
             mpGearBox->Init(pDevice);
         }
 
+        void WorldData::Cleanup()
+        {
+            if (mpGearBox)
+            {
+                delete mpGearBox;
+                mpGearBox = NULL;
+            }
+        }
+
         void WorldData::Update(float dt)
         {
             mpGearBox->Update(dt);

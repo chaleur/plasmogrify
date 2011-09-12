@@ -68,11 +68,13 @@ namespace Plasmogrify
             if (mpDevice)
             {
                 delete mpDevice;
+                mpDevice = NULL;
             }
 
             if (mpWorldData)
             {
                 delete mpWorldData;
+                mpWorldData = NULL;
             }
         }
 

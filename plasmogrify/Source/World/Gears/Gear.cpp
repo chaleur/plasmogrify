@@ -25,7 +25,9 @@ namespace Plasmogrify
             {
                 if (mpModel)
                 {
+                    mpModel->Cleanup();
                     delete mpModel;
+                    mpModel = NULL;
                 }
             }
 

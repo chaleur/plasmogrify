@@ -33,7 +33,10 @@ namespace Plasmogrify
                     HRESULT Init(HWND hWnd);
 
                     void CreateBuffer(D3D11_BUFFER_DESC* pDesc, D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Buffer** ppBuffer);
-                    
+                    HRESULT CreateVertexShader(void* pShaderBytecode, size_t bytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader);
+                    HRESULT CreateInputLayout(D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, uint32_t numElements, void* pShaderBytecodeWithInputSignature, size_t bytecodeLength, ID3D11InputLayout** ppInputLayout);
+                    HRESULT CreatePixelShader(const void* pShaderBytecode, size_t byteCodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader);
+
                     void PreRender();
                     void Render();
                     void PostRender();
@@ -51,8 +54,6 @@ namespace Plasmogrify
                     HRESULT InitDepthStencilBuffer(uint32_t width, uint32_t height);
                     HRESULT InitRenderTargets(uint32_t width, uint32_t height);
                     HRESULT InitViewport(uint32_t width, uint32_t height);
-                    HRESULT InitPipeline();
-                    HRESULT InitGeometry();
                     HRESULT InitFont();
 
                     HRESULT CompileShader( WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3DBlob** ppBlobOut );
@@ -66,9 +67,6 @@ namespace Plasmogrify
                     ID3D11RenderTargetView* mpRenderTargetView;
                     ID3D11Texture2D*        mpDepthStencilBuffer;
                     ID3D11DepthStencilView* mpDepthStencilView;
-                    ID3D11VertexShader*     mpVertexShader;
-                    ID3D11PixelShader*      mpPixelShader;
-                    ID3D11InputLayout*      mpVertexLayout;
             };
 
         } // namespace Graphics

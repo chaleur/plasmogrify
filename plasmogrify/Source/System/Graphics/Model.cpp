@@ -10,6 +10,7 @@
 #include "Model.h"
 #include "Device.h"
 #include "Context.h"
+#include "Effect.h"
 #include <math.h>
 
 namespace Plasmogrify
@@ -20,24 +21,41 @@ namespace Plasmogrify
         {
             Model::Model()
                 : mpVertexBuffer(NULL)
-                , mpVertexShader(NULL)
-                , mpPixelShader(NULL)
                 , mpVertexList(NULL)
                 , mVertexCount(0)
+                , mpEffect(NULL)
             {
             }
 
             Model::~Model()
             {
+            }
+
+            void Model::Cleanup()
+            {
+                if (mpVertexBuffer) mpVertexBuffer->Release();
                 if (mpVertexList)
                 {
                     delete[] mpVertexList;
+                    mpVertexList = NULL;
+                }
+                
+                if (mpEffect)
+                {
+                    mpEffect->Cleanup();
+                    delete mpEffect;
+                    mpEffect = NULL;
                 }
             }
 
-            void Model::Init(Device* pDevice, eTriangleType type)
+            void Model::InitMaterial(Device* pDevice)
             {
-                BuildGear(type);
+                mpEffect = new Effect();
+                mpEffect->Init(pDevice);
+            }
+
+            void Model::InitGeometry(Device* pDevice)
+            {
 
                 D3D11_BUFFER_DESC bd;
                 ZeroMemory( &bd, sizeof(bd) );
@@ -50,18 +68,25 @@ namespace Plasmogrify
                 srd.pSysMem = mpVertexList;
 
                 pDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer );
+            }
 
-                mpVertexShader = pDevice->GetVertexShader();
-                mpPixelShader = pDevice->GetPixelShader();
+            void Model::Init(Device* pDevice, eTriangleType type)
+            {
+                BuildPlaceholderVertexList(type);
+                InitMaterial(pDevice);
+                InitGeometry(pDevice);
             }
 
             void Model::Draw(Context* pContext)
             {
+                mpEffect->Apply(pContext);
+
                 uint32_t stride = sizeof( Vertex );
                 uint32_t offset = 0; // sizeof(Vertex) * 3;
-
+                
+                pContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
                 pContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
-                pContext->Draw(mpVertexShader, mpPixelShader, mVertexCount);
+                pContext->Draw(mVertexCount);
             }
 
             Vertex* Model::GetVertexList()
@@ -79,11 +104,12 @@ namespace Plasmogrify
                 return mVertexCount;
             }
 
-            void Model::BuildGear(eTriangleType type)
+            void Model::BuildPlaceholderVertexList(eTriangleType type)
             {
                 if (mpVertexList)
                 {
                     delete[] mpVertexList;
+                    mpVertexList = NULL;
                     mVertexCount = 0;
                 }
 

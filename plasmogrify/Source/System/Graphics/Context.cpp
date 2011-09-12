@@ -25,6 +25,11 @@ namespace Plasmogrify
             {
             }
 
+            void Context::Cleanup()
+            {
+                ClearState();
+            }
+
             void Context::ClearState()
             {
                 if (mpContext)
@@ -48,10 +53,8 @@ namespace Plasmogrify
                 mpContext->ClearDepthStencilView( pDepthStencilView, D3D10_CLEAR_DEPTH|D3D10_CLEAR_STENCIL, 1.0f, 0);
             }
 
-            void Context::Draw(ID3D11VertexShader* pVertexShader, ID3D11PixelShader* pPixelShader, uint32_t vertexCount)
+            void Context::Draw(uint32_t vertexCount)
             {
-                mpContext->VSSetShader( pVertexShader, NULL, 0 );
-                mpContext->PSSetShader( pPixelShader, NULL, 0 );
                 mpContext->Draw( vertexCount, 0 );
             }
 
@@ -133,6 +136,30 @@ namespace Plasmogrify
                 }
 
                 mpContext->OMSetRenderTargets( targetCount, ppRenderTargetViews, pDepthStencilView );
+
+                return S_OK;
+            }
+
+            HRESULT Context::SetVertexShader(ID3D11VertexShader* pVertexShader, ID3D11ClassInstance* const* ppClassInstances, uint32_t numClassInstances)
+            {
+                if (!mpContext)
+                {
+                    return E_POINTER;
+                }
+
+                mpContext->VSSetShader( pVertexShader, ppClassInstances, numClassInstances );
+
+                return S_OK;
+            }
+
+            HRESULT Context::SetPixelShader(ID3D11PixelShader* pPixelShader, ID3D11ClassInstance* const* ppClassInstances, uint32_t numClassInstances)
+            {
+                if (!mpContext)
+                {
+                    return E_POINTER;
+                }
+
+                mpContext->PSSetShader( pPixelShader, ppClassInstances, numClassInstances );
 
                 return S_OK;
             }

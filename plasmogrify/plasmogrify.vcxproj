@@ -15,6 +15,7 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\System\Graphics\Context.cpp" />
     <ClCompile Include="Source\System\Graphics\Device.cpp" />
+    <ClCompile Include="Source\System\Graphics\Effect.cpp" />
     <ClCompile Include="Source\System\Graphics\Font.cpp" />
     <ClCompile Include="Source\System\Graphics\Model.cpp" />
     <ClCompile Include="Source\System\Graphics\Texture.cpp" />
@@ -28,6 +29,7 @@
     <ClInclude Include="Source\Config.h" />
     <ClInclude Include="Source\System\Graphics\Context.h" />
     <ClInclude Include="Source\System\Graphics\Device.h" />
+    <ClInclude Include="Source\System\Graphics\Effect.h" />
     <ClInclude Include="Source\System\Graphics\Font.h" />
     <ClInclude Include="Source\System\Graphics\Model.h" />
     <ClInclude Include="Source\System\Graphics\Texture.h" />

@@ -28,6 +28,7 @@ namespace Plasmogrify
                 if (mpGear)
                 {
                     delete mpGear;
+                    mpGear = NULL;
                 }
             }
 

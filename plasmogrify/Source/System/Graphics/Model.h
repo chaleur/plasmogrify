@@ -22,6 +22,7 @@ namespace Plasmogrify
         {
             class Context;
             class Device;
+            class Effect;
 
             struct Vertex
             {
@@ -42,6 +43,8 @@ namespace Plasmogrify
                     Model();
                     ~Model();
 
+                    void        Cleanup();
+
                     void        Init(Device* pDevice, eTriangleType type);
 
                     Vertex*     GetVertexList();
@@ -52,18 +55,20 @@ namespace Plasmogrify
                     void Draw(Context* pContext);
 
                 private:
+                    
+                    void InitMaterial(Device* pDevice);
+                    void InitGeometry(Device* pDevice);
 
-                    void BuildGear(eTriangleType type);
+                    void BuildPlaceholderVertexList(eTriangleType type);
 
                 private:
                     
                     ID3D11Buffer*           mpVertexBuffer;
 
-                    ID3D11VertexShader*     mpVertexShader;
-                    ID3D11PixelShader*      mpPixelShader;
-
                     Vertex*                 mpVertexList;
                     uint32_t                mVertexCount;
+
+                    Effect*                 mpEffect;        // KAYE TODO: Extract a layer above model to hold an effect!
             };
 
         } // namespace Graphics

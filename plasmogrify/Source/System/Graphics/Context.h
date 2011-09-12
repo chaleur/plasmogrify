@@ -25,11 +25,12 @@ namespace Plasmogrify
                     Context();
                     ~Context();
 
+                    void Cleanup();
                     void ClearState();
                     void Release();
 
                     void PreDraw(ID3D11RenderTargetView* pRenderTargetView, ID3D11DepthStencilView* pDepthStencilView);
-                    void Draw(ID3D11VertexShader* pVertexShader, ID3D11PixelShader* pPixelShader, uint32_t vertexCount);
+                    void Draw(uint32_t vertexCount);
 
                     HRESULT SetVertexBuffers(uint32_t startSlot, uint32_t numBuffers, ID3D11Buffer** ppVertexBuffers, uint32_t* stride, uint32_t* offset);
                     HRESULT SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
@@ -38,6 +39,10 @@ namespace Plasmogrify
                     HRESULT SetInputLayout(ID3D11InputLayout* inputLayout);
                     HRESULT SetViewports(uint32_t viewportCount, D3D11_VIEWPORT* viewPorts );
                     HRESULT SetRenderTargets(uint32_t targetCount, ID3D11RenderTargetView** ppRenderTargetViews, ID3D11DepthStencilView* pDepthStencilView);
+
+                    HRESULT SetVertexShader(ID3D11VertexShader* pVertexShader, ID3D11ClassInstance* const* ppClassInstances, uint32_t numClassInstances);
+                    HRESULT SetPixelShader(ID3D11PixelShader* pPixelShader, ID3D11ClassInstance* const* ppClassInstances, uint32_t numClassInstances);
+
                     ID3D11DeviceContext** GetContextPtr();
                 
                 private:

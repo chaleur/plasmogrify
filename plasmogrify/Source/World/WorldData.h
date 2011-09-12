@@ -34,6 +34,8 @@ namespace Plasmogrify
                 WorldData();
                 ~WorldData();
 
+                void Cleanup();
+
                 void Init(System::Graphics::Device* pDevice);
                 void Update(float dt);
 

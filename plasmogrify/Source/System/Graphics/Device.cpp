@@ -9,8 +9,8 @@
 
 #include "Device.h"
 #include "Context.h"
-#include <iostream>
-#include <vector>
+//#include <iostream>
+//#include <vector>
 #include <d3dcompiler.h>
 #include <DxErr.h>
 
@@ -27,9 +27,6 @@ namespace Plasmogrify
                 , mpRenderTargetView(NULL)
                 , mpDepthStencilBuffer(NULL)
                 , mpDepthStencilView(NULL)
-                , mpVertexShader(NULL)
-                , mpPixelShader(NULL)
-                , mpVertexLayout(NULL)
             {
             }
 
@@ -43,15 +40,15 @@ namespace Plasmogrify
                 return mpContext;
             }
 
-            ID3D11VertexShader* Device::GetVertexShader()
-            {
-                return mpVertexShader;
-            }
+            //ID3D11VertexShader* Device::GetVertexShader()
+            //{
+            //    return mpVertexShader;
+            //}
 
-            ID3D11PixelShader* Device::GetPixelShader()
-            {
-                return mpPixelShader;
-            }
+            //ID3D11PixelShader* Device::GetPixelShader()
+            //{
+            //    return mpPixelShader;
+            //B}
 
             HRESULT Device::InitDeviceAndSwapChain(HWND hWnd, uint32_t width, uint32_t height)
             {
@@ -239,77 +236,6 @@ namespace Plasmogrify
                 return hr;
             }
 
-            HRESULT CompileShaderFromFile( char* szFileName, char* szEntryPoint, char* szShaderModel, ID3DBlob** ppBlobOut )
-            {
-                HRESULT hr = S_OK;
-
-                DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-
-                ID3DBlob* pErrorBlob;
-                hr = D3DX11CompileFromFile( szFileName, NULL, NULL, szEntryPoint, szShaderModel, dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL );
-                char* szErrorString = pErrorBlob ? (char*)pErrorBlob->GetBufferPointer() : "Error Compiling Shader from File.";
-                HROUTPUT(hr, szErrorString);
-                HRTRACE(hr, L"Error compiling shader from file.");
-
-                if (pErrorBlob)
-                {
-                    pErrorBlob->Release();
-                }
-
-                return hr;
-            }
-
-            HRESULT Device::InitPipeline()
-            {
-                HRESULT result, hr = S_OK;
-
-                ID3DBlob* pVSBlob = NULL;
-                result = CompileShaderFromFile( "Shaders/generic.fx", "VS", "vs_4_0", &pVSBlob );
-                HRTRACE(result, L"Failed to compile vertex shader.");
-                hr |= result;
-
-                result = mpDevice->CreateVertexShader( pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, &mpVertexShader ), L"Failed to create vertex shader.";
-                HRTRACE(result, L"Failed to compile vertex shader.");
-                hr |= result;
-
-                D3D11_INPUT_ELEMENT_DESC layout[] =
-                {
-                    {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-                    {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
-                };
-                UINT numElements = ARRAYSIZE( layout );
-
-                result = mpDevice->CreateInputLayout( layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &mpVertexLayout );
-                HRTRACE(result, L"Failed to create input layout.");
-                hr |= result;
-
-                if (pVSBlob) pVSBlob->Release();
-
-                result = mpContext->SetInputLayout( mpVertexLayout );
-                HRTRACE(result, L"Failed to set input layout.");
-                hr |= result;
-
-                ID3DBlob* pPSBlob = NULL;
-                result = CompileShaderFromFile( "Shaders/generic.fx", "PS", "ps_4_0", &pPSBlob );
-                HRTRACE(result, L"Failed to compile pixel shader.");
-                hr |= result;
-
-                result = mpDevice->CreatePixelShader( pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, &mpPixelShader );
-                HRTRACE(result, L"Failed to create pixel shader.");
-                hr |= result;
-
-                if (pPSBlob) pPSBlob->Release();
-
-                return hr;
-
-            }
-
-            HRESULT Device::InitGeometry()
-            {
-                mpContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-                return S_OK;
-            }
-
             HRESULT Device::InitFont()
             {
                 return S_OK;
@@ -336,23 +262,15 @@ namespace Plasmogrify
                 //HRESULT sresult = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)(&pFactory));
                 //pFactory->MakeWindowAssociation(hWnd, DXGI_MWA_NO_WINDOW_CHANGES);
 
-                InitRenderTargets(width, height);
+                result = InitRenderTargets(width, height);
                 HRTRACE(result, L"Failed to init render targets.");
                 hr |= result;
 
-                InitViewport(width, height);
+                result = InitViewport(width, height);
                 HRTRACE(result, L"Failed to init viewport.");
                 hr |= result;
 
-                InitPipeline();
-                HRTRACE(result, L"Failed to init pipeline.");
-                hr |= result;
-
-                InitGeometry();
-                HRTRACE(result, L"Failed to init geometry.");
-                hr |= result;
-
-                InitFont();
+                result = InitFont();
                 HRTRACE(result, L"Failed to init font.");
                 hr |= result;
 
@@ -365,6 +283,21 @@ namespace Plasmogrify
             void Device::CreateBuffer(D3D11_BUFFER_DESC* pDesc, D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Buffer** ppBuffer)
             {
                 mpDevice->CreateBuffer(pDesc, pInitialData, ppBuffer );
+            }
+
+            HRESULT Device::CreateVertexShader(void* pShaderBytecode, size_t bytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader)
+            {
+                return mpDevice->CreateVertexShader(pShaderBytecode, bytecodeLength, pClassLinkage, ppVertexShader );
+            }
+
+            HRESULT Device::CreateInputLayout(D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, uint32_t numElements, void* pShaderBytecodeWithInputSignature, size_t bytecodeLength, ID3D11InputLayout** ppInputLayout)
+            {
+                return mpDevice->CreateInputLayout(pInputElementDescs, numElements, pShaderBytecodeWithInputSignature, bytecodeLength, ppInputLayout);
+            }
+
+            HRESULT Device::CreatePixelShader(const void* pShaderBytecode, size_t byteCodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader)
+            {
+                return mpDevice->CreatePixelShader(pShaderBytecode, byteCodeLength, pClassLinkage, ppPixelShader);
             }
 
             void Device::PreRender()
@@ -383,11 +316,13 @@ namespace Plasmogrify
 
             void Device::Cleanup()
             {
-                if (mpContext) mpContext->ClearState();
+                if (mpContext)
+                {
+                    mpContext->Cleanup();
+                    delete mpContext;
+                    mpContext = NULL;
+                }
 
-                if (mpVertexLayout) mpVertexLayout->Release();
-                if (mpPixelShader) mpPixelShader->Release();
-                if (mpVertexShader) mpVertexShader->Release();
                 if (mpRenderTargetView) mpRenderTargetView->Release();
                 if (mpDepthStencilView) mpDepthStencilView->Release();
                 if (mpDepthStencilBuffer) mpDepthStencilBuffer->Release();

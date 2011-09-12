@@ -54,6 +54,9 @@
     <ClCompile Include="Source\System\Graphics\Model.cpp">
       <Filter>System\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Effect.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -85,6 +88,9 @@
       <Filter>System\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\Graphics\Model.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Effect.h">
       <Filter>System\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
