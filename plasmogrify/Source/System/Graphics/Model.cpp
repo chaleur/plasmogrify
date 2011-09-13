@@ -20,9 +20,13 @@ namespace Plasmogrify
         namespace Graphics
         {
             Model::Model()
-                : mpVertexBuffer(NULL)
+                : mbInit(false)
+                , mpVertexBuffer(NULL)
                 , mpVertexList(NULL)
                 , mVertexCount(0)
+                , mpIndexBuffer(NULL)
+                , mpIndexList(NULL)
+                , mIndexCount(0)
                 , mpEffect(NULL)
             {
             }
@@ -38,6 +42,15 @@ namespace Plasmogrify
                 {
                     delete[] mpVertexList;
                     mpVertexList = NULL;
+                    mVertexCount = 0;
+                }
+
+                if (mpIndexBuffer) mpIndexBuffer->Release();
+                if (mpVertexList)
+                {
+                    delete[] mpVertexList;
+                    mpVertexList = NULL;
+                    mIndexCount = 0;
                 }
                 
                 if (mpEffect)
@@ -48,29 +61,7 @@ namespace Plasmogrify
                 }
             }
 
-            void Model::InitMaterial(Device* pDevice)
-            {
-                mpEffect = new Effect();
-                mpEffect->Init(pDevice);
-            }
-
-            void Model::InitGeometry(Device* pDevice)
-            {
-
-                D3D11_BUFFER_DESC bd;
-                ZeroMemory( &bd, sizeof(bd) );
-                bd.Usage = D3D11_USAGE_DYNAMIC;
-                bd.ByteWidth = sizeof( Vertex ) * 6;
-                bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-                bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-                D3D11_SUBRESOURCE_DATA srd;
-                srd.pSysMem = mpVertexList;
-
-                pDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer );
-            }
-
-            bool  Model::CreateVertexList(uint32_t vertexCount)
+            bool Model::CreateVertexList(uint32_t vertexCount)
             {
                 if (mpVertexList)
                 {
@@ -95,10 +86,82 @@ namespace Plasmogrify
 
             }
 
+            bool Model::CreateIndexList(uint32_t indexCount)
+            {
+                if (mpIndexList)
+                {
+                    return false;
+                }
+
+                mpIndexList = new uint32_t[indexCount];
+                mIndexCount = indexCount;
+
+                return true;
+            }
+
+            void Model::SetIndex(uint32_t index, uint32_t value)
+            {
+                if (index >= mIndexCount)
+                {
+                    return;
+                }
+
+                mpIndexList[index] = value;
+            }
+
+            void Model::CreateVertexBuffer(Device* pDevice)
+            {
+                D3D11_BUFFER_DESC bd;
+                ZeroMemory( &bd, sizeof(bd) );
+                bd.Usage = D3D11_USAGE_IMMUTABLE;
+                bd.ByteWidth = sizeof( Vertex ) * mVertexCount;
+                bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+                bd.CPUAccessFlags = 0;
+                bd.MiscFlags = 0;
+
+                D3D11_SUBRESOURCE_DATA srd;
+                srd.pSysMem = mpVertexList;
+
+                pDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer );
+            }
+
+            void Model::CreateIndexBuffer(Device* pDevice)
+            {
+                D3D11_BUFFER_DESC bd;
+                ZeroMemory( &bd, sizeof(bd) );
+                bd.Usage = D3D11_USAGE_IMMUTABLE;
+                bd.ByteWidth = sizeof( DWORD ) * mIndexCount;
+                bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+                bd.CPUAccessFlags = 0;
+                bd.MiscFlags = 0;
+
+                D3D11_SUBRESOURCE_DATA srd;
+                srd.pSysMem = mpIndexList;
+
+                pDevice->CreateBuffer( &bd, &srd, &mpIndexBuffer );
+            }
+
+            void Model::InitGeometry(Device* pDevice)
+            {
+                CreateVertexBuffer(pDevice);
+                CreateIndexBuffer(pDevice);
+            }
+
+            void Model::InitMaterial(Device* pDevice)
+            {
+                mpEffect = new Effect();
+                mpEffect->Init(pDevice);
+            }
+
             void Model::Init(Device* pDevice)
             {
-                InitMaterial(pDevice);
+                if (mbInit)
+                {
+                    return;
+                }
+
                 InitGeometry(pDevice);
+                InitMaterial(pDevice);
             }
 
             void Model::Draw(Context* pContext)
@@ -110,7 +173,10 @@ namespace Plasmogrify
                 
                 pContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
                 pContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
-                pContext->Draw(mVertexCount);
+                pContext->SetIndexBuffer(mpIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+                //pContext->Draw(mVertexCount);
+                pContext->DrawIndexed(mIndexCount, 0, 0);
             }
 
             Vertex* Model::GetVertexList()

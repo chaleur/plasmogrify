@@ -51,6 +51,8 @@ namespace Plasmogrify
                 private:
                     bool                              mbInit;
                     System::Graphics::Model*          mpModel;
+
+                    static const uint32_t             kSegments;
             };
 
         } // namespace Gears

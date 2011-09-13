@@ -53,6 +53,11 @@ namespace Plasmogrify
                 mpContext->ClearDepthStencilView( pDepthStencilView, D3D10_CLEAR_DEPTH|D3D10_CLEAR_STENCIL, 1.0f, 0);
             }
 
+            void Context::DrawIndexed(uint32_t indexCount, uint32_t startIndexLocation, int32_t baseVertexLocation)
+            {
+                mpContext->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
+            }
+
             void Context::Draw(uint32_t vertexCount)
             {
                 mpContext->Draw( vertexCount, 0 );
@@ -68,6 +73,16 @@ namespace Plasmogrify
                 mpContext->IASetVertexBuffers( startSlot, numBuffers, ppVertexBuffers, stride, offset );
 
                 return S_OK;
+            }
+
+            HRESULT Context::SetIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT format, uint32_t offset)
+            {
+                if (!mpContext)
+                {
+                    return E_POINTER;
+                }
+
+                mpContext->IASetIndexBuffer(pIndexBuffer, format, offset);
             }
 
             HRESULT Context::SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)

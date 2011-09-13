@@ -15,6 +15,8 @@ namespace Plasmogrify
     {    
         namespace Gears
         {
+            const uint32_t Gear::kSegments = 4;
+
             Gear::Gear()
                 : mbInit(false)
                 , mpModel(NULL)
@@ -42,17 +44,16 @@ namespace Plasmogrify
 
                 mpModel = new System::Graphics::Model();
                 BuildGear(gearType);
-                
                 mpModel->Init(pDevice);
             }
 
             void Gear::BuildGear(eGearType gearType)
             {
+                uint32_t numVerts = kSegments * 3;
+                mpModel->CreateVertexList(numVerts);
 
-                uint32_t segments = 4;
-
-                uint32_t vertexCount = segments * 3;
-                mpModel->CreateVertexList(vertexCount);
+                uint32_t numIndicies = kSegments * 3;
+                mpModel->CreateIndexList(numIndicies);
 
                 XMFLOAT3 center = XMFLOAT3(0.45f, 0.00f, 0.0f);
                 
@@ -70,7 +71,7 @@ namespace Plasmogrify
                     }
                 }
 
-                for (uint32_t i = 0; i < segments; ++i)
+                for (uint32_t i = 0; i < kSegments; ++i)
                 {
                     uint32_t offset = i * 3;
 
@@ -79,6 +80,10 @@ namespace Plasmogrify
                     mpModel->SetVertex(offset + 0, XMFLOAT3(0.0f, 0.5f + center.y, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
                     mpModel->SetVertex(offset + 1, XMFLOAT3(0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
                     mpModel->SetVertex(offset + 2, XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+
+                    mpModel->SetIndex(offset + 0, offset + 0);
+                    mpModel->SetIndex(offset + 1, offset + 1);
+                    mpModel->SetIndex(offset + 2, offset + 2);
                 }
 
             }
