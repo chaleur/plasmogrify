@@ -28,6 +28,11 @@ namespace Plasmogrify
 
         void WorldData::Init(System::Graphics::Device* pDevice)
         {
+            if (mbInit)
+            {
+                return;
+            }
+
             mbInit = true;
             mpGearBox = new Gears::GearBox();
             mpGearBox->Init(pDevice);

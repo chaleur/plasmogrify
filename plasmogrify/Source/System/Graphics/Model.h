@@ -33,19 +33,15 @@ namespace Plasmogrify
             class Model
             {
                 public:
-                    enum eTriangleType
-                    {
-                        kTriangle_Type0,
-                        kTriangle_Type1
-                    };
-
-                public:
                     Model();
                     ~Model();
 
                     void        Cleanup();
 
-                    void        Init(Device* pDevice, eTriangleType type);
+                    void        Init(Device* pDevice);
+
+                    bool        CreateVertexList(uint32_t vertexCount);
+                    void        SetVertex(uint32_t index, XMFLOAT3& pos, XMFLOAT4& colour);
 
                     Vertex*     GetVertexList();
                     size_t      GetVertexListSize();
@@ -58,8 +54,6 @@ namespace Plasmogrify
                     
                     void InitMaterial(Device* pDevice);
                     void InitGeometry(Device* pDevice);
-
-                    void BuildPlaceholderVertexList(eTriangleType type);
 
                 private:
                     

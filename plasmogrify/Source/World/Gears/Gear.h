@@ -30,13 +30,23 @@ namespace Plasmogrify
             class Gear
             {
                 public:
+                    enum eGearType
+                    {
+                        kGearType_Small,
+                        kGearType_Big
+                    };
+
+                public:
                     Gear();
                     ~Gear();
 
                 public:
-                    void Init(System::Graphics::Device* pDevice);
+                    void Init(System::Graphics::Device* pDevice, eGearType gearType);
                     void Update(float dt);
                     void Draw(System::Graphics::Context* pContext);
+
+                private:
+                    void BuildGear(eGearType gearType);
 
                 private:
                     bool                              mbInit;

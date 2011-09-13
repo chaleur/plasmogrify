@@ -42,7 +42,8 @@ namespace Plasmogrify
                     bool                mbInit;
 
                     // \\\ TODO: Make this a set of gears.
-                    Gear*               mpGear; 
+                    Gear*               mpGear0; 
+                    Gear*               mpGear1; 
             };
 
         } // namespace Gears

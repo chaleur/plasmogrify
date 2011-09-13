@@ -70,9 +70,33 @@ namespace Plasmogrify
                 pDevice->CreateBuffer( &bd, &srd, &mpVertexBuffer );
             }
 
-            void Model::Init(Device* pDevice, eTriangleType type)
+            bool  Model::CreateVertexList(uint32_t vertexCount)
             {
-                BuildPlaceholderVertexList(type);
+                if (mpVertexList)
+                {
+                    return false;
+                }
+
+                mpVertexList = new Vertex[vertexCount];
+                mVertexCount = vertexCount;
+
+                return true;
+            }
+
+            void Model::SetVertex(uint32_t index, XMFLOAT3& pos, XMFLOAT4& colour)
+            {
+                if (index >= mVertexCount)
+                {
+                    return;
+                }
+
+                mpVertexList[index].Pos = pos;
+                mpVertexList[index].Colour = colour;
+
+            }
+
+            void Model::Init(Device* pDevice)
+            {
                 InitMaterial(pDevice);
                 InitGeometry(pDevice);
             }
@@ -102,54 +126,6 @@ namespace Plasmogrify
             uint32_t Model::GetVertexCount()
             {
                 return mVertexCount;
-            }
-
-            void Model::BuildPlaceholderVertexList(eTriangleType type)
-            {
-                if (mpVertexList)
-                {
-                    delete[] mpVertexList;
-                    mpVertexList = NULL;
-                    mVertexCount = 0;
-                }
-
-                uint32_t segments = 4;
-
-                mVertexCount = segments * 3;
-                mpVertexList = new Vertex[mVertexCount];
-
-                XMFLOAT3 center = XMFLOAT3(0.45f, 0.00f, 0.0f);
-                
-                switch ( type )
-                {
-                    case kTriangle_Type0:
-                    {
-                        center = XMFLOAT3(0.00f, 0.10f, 0.0f);
-                        break;
-                    }
-                    case kTriangle_Type1:
-                    {
-                        center = XMFLOAT3(0.00f, -0.45f, 0.0f);
-                        break;
-                    }
-                }
-
-                for (uint32_t i = 0; i < segments; ++i)
-                {
-                    uint32_t offset = i * 3;
-
-                    float angle = (float)i / (2.0f * 3.1415926f);
-
-                    mpVertexList[offset + 0].Pos =    XMFLOAT3(0.0f, 0.5f + center.y, 0.0f);
-                    mpVertexList[offset + 0].Colour = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-
-                    mpVertexList[offset + 1].Pos =    XMFLOAT3(0.45f, 0.0f + center.y, 0.0f) ;
-                    mpVertexList[offset + 1].Colour = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-
-                    mpVertexList[offset + 2].Pos =    XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f);
-                    mpVertexList[offset + 2].Colour = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
-                }
-
             }
 
             static float sign0 = 1.0f;

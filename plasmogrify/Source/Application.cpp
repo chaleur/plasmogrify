@@ -116,10 +116,15 @@ namespace Plasmogrify
 
         void Application::Init(HINSTANCE hInstance, int nCmdShow)
         {
+            if (mbInit)
+            {
+                return;
+            }
+
+            mbInit = true;
             InitWindow(hInstance, nCmdShow);
             InitDevice();
             InitWorld();
-            mbInit = true;
         }
 
         uint16_t Application::MainLoop()

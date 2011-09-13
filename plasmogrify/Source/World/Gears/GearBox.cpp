@@ -19,34 +19,50 @@ namespace Plasmogrify
         {
             GearBox::GearBox()
                 : mbInit(false)
-                , mpGear(NULL)
+                , mpGear0(NULL)
+                , mpGear1(NULL)
             {
             }
 
             GearBox::~GearBox()
             {
-                if (mpGear)
+                if (mpGear0)
                 {
-                    delete mpGear;
-                    mpGear = NULL;
+                    delete mpGear0;
+                    mpGear0 = NULL;
+                }
+
+                if (mpGear1)
+                {
+                    delete mpGear1;
+                    mpGear1 = NULL;
                 }
             }
 
             void GearBox::Init(System::Graphics::Device *pDevice)
             {
+                if (mbInit)
+                {
+                    return;
+                }
+
                 mbInit = true;
-                mpGear = new Gear();
-                mpGear->Init(pDevice);
+                mpGear0 = new Gear();
+                mpGear0->Init(pDevice, Gear::kGearType_Small);
+                mpGear1 = new Gear();
+                mpGear1->Init(pDevice, Gear::kGearType_Big);
             }
 
             void GearBox::Update(float dt)
             {
-                mpGear->Update(dt);
+                mpGear0->Update(dt);
+                mpGear1->Update(dt);
             }
 
             void GearBox::Draw(System::Graphics::Context* pContext)
             {
-                mpGear->Draw(pContext);
+                mpGear0->Draw(pContext);
+                mpGear1->Draw(pContext);
             }
 
         } // namespace Gears
