@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{3c2afaeb-7225-4df6-96a7-f00d5dd54ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{c1992d09-e453-4ad1-9e44-534e6879a4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Gears">
+      <UniqueIdentifier>{a86d35da-34ae-4707-8218-bf21cc84f167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Graphics">
+      <UniqueIdentifier>{bb038359-2d7b-4f6b-a6b4-019b2437e1d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World\WorldData.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World\Gears\Gear.cpp">
+      <Filter>World\Gears</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World\Gears\GearBox.cpp">
+      <Filter>World\Gears</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\System\Graphics\Device.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Font.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Texture.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Context.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Model.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Graphics\Effect.cpp">
+      <Filter>System\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\World\WorldData.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\World\Gears\Gear.h">
+      <Filter>World\Gears</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\World\Gears\GearBox.h">
+      <Filter>World\Gears</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Config.h" />
+    <ClInclude Include="Source\System\Graphics\Device.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Font.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Texture.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Context.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Model.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Graphics\Effect.h">
+      <Filter>System\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\generic.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\font.fx">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
