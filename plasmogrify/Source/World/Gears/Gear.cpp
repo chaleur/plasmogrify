@@ -49,13 +49,21 @@ namespace Plasmogrify
 
             void Gear::BuildGear(eGearType gearType)
             {
-                uint32_t numVerts = kSegments * 3;
+                uint32_t numVerts = kSegments + 1;
                 mpModel->CreateVertexList(numVerts);
 
                 uint32_t numIndicies = kSegments * 3;
                 mpModel->CreateIndexList(numIndicies);
 
+                uint32_t vertex = 0;
+                uint32_t index = 0;
+
                 XMFLOAT3 center = XMFLOAT3(0.45f, 0.00f, 0.0f);
+
+                // Add the center vertex.
+                mpModel->SetVertex(vertex, XMFLOAT3(0.0f, 0.5f + center.y, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) );
+                ++vertex;
+
                 
                 switch ( gearType )
                 {
@@ -71,20 +79,35 @@ namespace Plasmogrify
                     }
                 }
 
+                float angleIncrement = (2.0f * 3.1415926f) / kSegments;
                 for (uint32_t i = 0; i < kSegments; ++i)
                 {
+
+                    float angle = i * angleIncrement;
+                    float cosAngle = cos(angle);
+                    float sinAngle = sin(angle);
+
+                    mpModel->SetVertex(vertex, XMFLOAT3(cosAngle, sinAngle + center.y, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) );
+                    ++vertex;
+
+                    
                     uint32_t offset = i * 3;
+                    mpModel->SetIndex(index, 0);
+                    mpModel->SetIndex(index + 1, i);
+                    mpModel->SetIndex(index + 2, i + 1);
+                    index += 3;
 
-                    float angle = (float)i / (2.0f * 3.1415926f);
-
-                    mpModel->SetVertex(offset + 0, XMFLOAT3(0.0f, 0.5f + center.y, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
-                    mpModel->SetVertex(offset + 1, XMFLOAT3(0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-                    mpModel->SetVertex(offset + 2, XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-
-                    mpModel->SetIndex(offset + 0, offset + 0);
-                    mpModel->SetIndex(offset + 1, offset + 1);
-                    mpModel->SetIndex(offset + 2, offset + 2);
                 }
+
+                
+                
+                //mpModel->SetVertex(offset + 0, XMFLOAT3(0.0f, 0.5f + center.y, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+                //mpModel->SetVertex(offset + 1, XMFLOAT3(0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+                //mpModel->SetVertex(offset + 2, XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+
+                //mpModel->SetIndex(offset + 0, offset + 0);
+                //mpModel->SetIndex(offset + 1, offset + 1);
+                //mpModel->SetIndex(offset + 2, offset + 2);
 
             }
 
