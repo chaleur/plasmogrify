@@ -49,14 +49,16 @@ namespace Plasmogrify
 
             void Gear::BuildGear(eGearType gearType)
             {
-                uint32_t numVerts = kSegments * 3;
+                uint32_t numVerts = kSegments + 1;
                 mpModel->CreateVertexList(numVerts);
 
                 uint32_t numIndicies = kSegments * 3;
                 mpModel->CreateIndexList(numIndicies);
 
+                uint32_t vertex = 0;
+                uint32_t index = 0;
+
                 XMFLOAT3 center = XMFLOAT3(0.45f, 0.00f, 0.0f);
-                
                 switch ( gearType )
                 {
                     case kGearType_Small:
@@ -71,21 +73,43 @@ namespace Plasmogrify
                     }
                 }
 
+				static XMFLOAT4 kColorHack[5] =
+				{
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+					XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f),
+										XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f),
+															XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f),
+																				XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)
+				};
+
+				mpModel->SetVertex(vertex, XMFLOAT3(0.0f, center.y, 0.0f), kColorHack[vertex] );
+                ++vertex;
+
+                float angleIncrement = (2.0f * 3.1415926f) / kSegments;
                 for (uint32_t i = 0; i < kSegments; ++i)
                 {
-                    uint32_t offset = i * 3;
 
-                    float angle = (float)i / (2.0f * 3.1415926f);
+                    float angle = i * angleIncrement;
+                    float cosAngle = cos(angle) * 0.5f;
+                    float sinAngle = sin(angle) * 0.5f;
 
-                    mpModel->SetVertex(offset + 0, XMFLOAT3(0.0f, 0.5f + center.y, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
-                    mpModel->SetVertex(offset + 1, XMFLOAT3(0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-                    mpModel->SetVertex(offset + 2, XMFLOAT3(-0.45f, 0.0f + center.y, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+                    mpModel->SetVertex(vertex, XMFLOAT3(cosAngle, sinAngle + center.y, 0.0f), kColorHack[vertex] );
 
-                    mpModel->SetIndex(offset + 0, offset + 0);
-                    mpModel->SetIndex(offset + 1, offset + 1);
-                    mpModel->SetIndex(offset + 2, offset + 2);
+                    mpModel->SetIndex(index, 0);
+					++index;
+
+					// If this is the last one, loop back around to index 1 (index 0 is the centre)
+					if ( vertex < kSegments ) 
+						mpModel->SetIndex(index, vertex+1);
+					else
+						mpModel->SetIndex(index, 1);
+					++index;
+
+                    mpModel->SetIndex(index, vertex);
+					++index;
+					
+                    ++vertex;
                 }
-
             }
 
             void Gear::Update(float dt)

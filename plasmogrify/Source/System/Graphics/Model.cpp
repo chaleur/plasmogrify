@@ -174,7 +174,7 @@ namespace Plasmogrify
                 pContext->SetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
                 pContext->SetVertexBuffers( 0, 1, &mpVertexBuffer, &stride, &offset );
                 pContext->SetIndexBuffer(mpIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
+				
                 //pContext->Draw(mVertexCount);
                 pContext->DrawIndexed(mIndexCount, 0, 0);
             }

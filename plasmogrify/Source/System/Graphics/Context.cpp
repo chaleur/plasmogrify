@@ -83,6 +83,8 @@ namespace Plasmogrify
                 }
 
                 mpContext->IASetIndexBuffer(pIndexBuffer, format, offset);
+
+				return S_OK;
             }
 
             HRESULT Context::SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
