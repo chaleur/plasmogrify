@@ -49,20 +49,20 @@ namespace Plasmogrify
                 mbInit = true;
                 mpGear0 = new Gear();
                 mpGear0->Init(pDevice, Gear::kGearType_Small);
-                mpGear1 = new Gear();
-                mpGear1->Init(pDevice, Gear::kGearType_Big);
+                //mpGear1 = new Gear();
+                //mpGear1->Init(pDevice, Gear::kGearType_Big);
             }
 
             void GearBox::Update(float dt)
             {
                 mpGear0->Update(dt);
-                mpGear1->Update(dt);
+                //mpGear1->Update(dt);
             }
 
             void GearBox::Draw(System::Graphics::Context* pContext)
             {
                 mpGear0->Draw(pContext);
-                mpGear1->Draw(pContext);
+                //mpGear1->Draw(pContext);
             }
 
         } // namespace Gears

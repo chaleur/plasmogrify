@@ -74,15 +74,10 @@ namespace Plasmogrify
                 scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
                 scd.Flags = 0; // DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-				
-scd.SampleDesc.Count = 1;
-scd.SampleDesc.Quality = 0;
-
                 D3D_DRIVER_TYPE driverType = D3D_DRIVER_TYPE_HARDWARE;
 
 				hr = D3D11CreateDeviceAndSwapChain(NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, mpContext->GetContextPtr());
-                //hr = D3D11CreateDeviceAndSwapChain( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, mpContext->GetContextPtr() );
-
+ 
 				if( FAILED(hr) ) 
 				{ 
 					 DXTrace( __FILE__, __LINE__, hr, DXGetErrorDescription(hr), true ); 
