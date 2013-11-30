@@ -70,15 +70,20 @@ namespace Plasmogrify
                 scd.SampleDesc.Count = 1; 
                 scd.SampleDesc.Quality = 0;  
                 scd.OutputWindow = hWnd; 
-                scd.Windowed = TRUE; 
+                scd.Windowed = true; 
                 scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-                //scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+                scd.Flags = 0; // DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
                 D3D_DRIVER_TYPE driverType = D3D_DRIVER_TYPE_HARDWARE;
 
-                hr = D3D11CreateDeviceAndSwapChain( NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, mpContext->GetContextPtr() );
-                HRTRACE(hr, L"Failed to Create Device and Swap Chain.");
+				hr = D3D11CreateDeviceAndSwapChain(NULL, driverType, NULL, D3D11_CREATE_DEVICE_DEBUG, NULL, NULL, D3D11_SDK_VERSION, &scd, &mpSwapChain, &mpDevice, NULL, mpContext->GetContextPtr());
+ 
+				if( FAILED(hr) ) 
+				{ 
+					 DXTrace( __FILE__, __LINE__, hr, DXGetErrorDescription(hr), true ); 
+				} 
 
+                HRTRACE(hr, L"Failed to Create Device and Swap Chain.");
                 
                 HRESULT result;
 
